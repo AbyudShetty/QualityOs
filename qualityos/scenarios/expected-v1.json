@@ -1,0 +1,27 @@
+{
+  "version": "qualityos-independent-v1",
+  "provenance": "SYNTHETIC",
+  "frozen_before_evaluator": true,
+  "cases": [
+    {"id":"qualified","change":"none","expected":"ACCEPT"},
+    {"id":"outside-lot","change":"outside_lot","expected":"HOLD"},
+    {"id":"covered-lot","change":"covered_lot","expected":"ACCEPT"},
+    {"id":"config-change","change":"new_config","expected":"HOLD"},
+    {"id":"invalid-reference","change":"invalid_calibration","expected":"HOLD"},
+    {"id":"old-expiry","change":"expired_now_valid_then","expected":"ACCEPT"},
+    {"id":"revoked-reference","change":"retroactive_revocation","expected":"HOLD"},
+    {"id":"uncertainty-missing","change":"missing_uncertainty","expected":"HOLD"},
+    {"id":"unsupported-uncertainty","change":"expanded_uncertainty","expected":"HOLD"},
+    {"id":"overlap","change":"overlap","expected":"HOLD"},
+    {"id":"off-torque","change":"outside_interval","expected":"REJECT"},
+    {"id":"functional-pending","change":"pending_functional","expected":"HOLD"},
+    {"id":"functional-fail","change":"failed_functional","expected":"REJECT"},
+    {"id":"functional-conflict","change":"conflict","expected":"HOLD"},
+    {"id":"source-gap","change":"source_gap","expected":"HOLD"},
+    {"id":"wrong-unit","change":"wrong_unit","expected":"HOLD"},
+    {"id":"future-available","change":"future_available","expected":"HOLD"},
+    {"id":"unrelated","change":"unrelated_fact","expected":"ACCEPT"},
+    {"id":"unknown-lineage","change":"partial_lineage","expected":"HOLD"},
+    {"id":"old-policy","change":"new_policy","expected":"HOLD"}
+  ]
+}

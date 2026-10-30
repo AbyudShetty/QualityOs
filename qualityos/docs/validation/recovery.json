@@ -1,0 +1,17 @@
+{
+  "provenance": "SYNTHETIC",
+  "completed_at": "2026-10-30T14:22:56.345543+00:00",
+  "checks": [
+    "Fresh schema and random accounts",
+    "Real HTTP authentication",
+    "Built SPA served",
+    "QA permission and three committed units",
+    "Dedicated process terminated after commit",
+    "Same store restarted in a new process",
+    "Persisted session and receipt replayed",
+    "Exactly three units and matching semantic digest"
+  ],
+  "passed": true,
+  "semantic_digest": "7753d054bb1f97a8fa788bb982ae62faa30322234805baf51e2d6734967a746b",
+  "limits": "One process failure after a completed transaction; before-commit rollback is tested separately. Not a power-loss or filesystem fault trial."
+}

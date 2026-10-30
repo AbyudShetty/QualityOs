@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-30T14:22:59.263842+00:00",
+  "provenance": "SYNTHETIC",
+  "basis": "In-process ASGI HTTP requests with authentication, serialization and SQLite; excludes TCP/browser rendering",
+  "fixture": {
+    "initial_events": 10000,
+    "initial_entities": 39,
+    "archive_events": 9999,
+    "archive_changes_per_event": 0,
+    "runs": 2,
+    "command": "comment; includes preceding authenticated snapshot read",
+    "history_query_limit": 100
+  },
+  "environment": {
+    "os": "Windows-10-10.0.26300-SP0",
+    "python": "3.10.0",
+    "processor": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+    "logical_cpu_count": 16
+  },
+  "snapshot": {
+    "samples": 40,
+    "warmup": 5,
+    "p50_ms": 8.497,
+    "p95_ms": 10.249,
+    "max_ms": 10.855
+  },
+  "read_and_comment": {
+    "samples": 40,
+    "warmup": 5,
+    "p50_ms": 22.632,
+    "p95_ms": 26.32,
+    "max_ms": 29.779
+  },
+  "under_500ms_p95": true,
+  "replay_matches": true,
+  "limits": [
+    "10k event rows, not 10k entities, units or stored decision snapshots",
+    "No throughput, factory responsiveness, network, multiuser load or equipment guarantee",
+    "Full JSON snapshots grow with the entity population; retention/pagination must be engineered before scaling"
+  ]
+}

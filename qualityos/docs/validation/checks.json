@@ -1,0 +1,17 @@
+﻿{
+    "completed_at":  "2026-10-30T14:25:08.1495247Z",
+    "basis":  "Executed product checks; synthetic software only",
+    "backend":  {
+                    "errors":  0,
+                    "tests":  53,
+                    "failures":  0
+                },
+    "frontend":  {
+                     "tests":  3,
+                     "failed":  0,
+                     "passed":  3
+                 },
+    "typescript_and_build":  "PASSED",
+    "contract_generation":  "PASSED",
+    "python_warning":  "One existing Starlette multipart import PendingDeprecationWarning; no test failure"
+}

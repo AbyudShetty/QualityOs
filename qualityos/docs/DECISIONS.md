@@ -1,0 +1,98 @@
+# QualityOS decisions
+
+Started during preparation on 30 October 2026. ADR-001–006 record that stage. Subsequent ADRs record implementation choices after the user's explicit authorization.
+
+## ADR-001 — Canonical workspace relocation
+
+Decision: all new product work belongs under `C:/ABYUD/HACKATHONS/LOREAL/qualityos`.
+
+Authority: the user's latest instruction states that both previous handoff/reassessment folders were copied into this workspace and all writing will occur here. The previous target `C:/ABYUD/JOB/LOREAL/qualityos` is superseded. The sandbox permits writing in the current LOREAL folder, resolving the earlier access blocker.
+
+| Historical reference | Current reference |
+|---|---|
+| `C:/ABYUD/JOB/LOREAL` | `C:/ABYUD/HACKATHONS/LOREAL` |
+| `C:/ABYUD/JOB/LOREAL/qualityos` | `C:/ABYUD/HACKATHONS/LOREAL/qualityos` |
+| `C:/ABYUD/JOB/LOREAL/qualityos_handoff_2026-10-30_01` | `../qualityos_handoff_2026-10-30_01` from the product root |
+| `C:/ABYUD/JOB/LOREAL/reassessment_2026-10-30_01` | `../reassessment_2026-10-30_01` from the product root |
+
+Read-only checks found all 11 local handoff files and all 13 local reassessment files identical to corresponding files at the previous location. Preserve these source copies unchanged. A source manifest records the current files and SHA-256 hashes. External project paths in the handoff remain optional read-only references; they are not relocated application dependencies.
+
+## ADR-002 — Preparation-only boundary
+
+Decision: create product-local planning/readiness documents and repository metadata; do not implement M1 or install/start the application until the user starts implementation.
+
+Reason: this explicitly supersedes the preceding instruction to build immediately. No application skeleton, package manifests, executable test fixtures, lockfiles, migrations, database, frontend or generated results are created during this stage. An acceptance table can be frozen now; runnable test expectations are created before the evaluator in M1.
+
+## ADR-003 — User owns version control
+
+Decision: the LOREAL root is the proposed single Git repository; the user executes every Git command. No nested repository under `qualityos`.
+
+Reason: preserves the case, research, specifications and product in one traceable history without moving existing files. Root AGENTS.md records the prohibition on running even read-only Git commands. Setup instructions include explicit paths and staged review before committing; no remote or public push is assumed.
+
+## ADR-004 — Retain the canonical product architecture
+
+Decision: plan Python 3.10-compatible FastAPI/Pydantic 2/SQLAlchemy 2 with SQLite, plus React/TypeScript/Vite, native CSS and bounded SVG views. One backend process; append-only facts plus transactional projections; server-owned roles and guarded simulation permissions; one-second cursor polling.
+
+Reason: complete specification already defines the product and its invariants. The local Python/Node/browser tools support proceeding to compatibility checks. Version pins remain provisional until isolated tests pass. No broad architecture change or new research cycle is justified by preparation findings.
+
+Planned migration choice: ordered SQL migrations with a version table and explicit transactional upgrade tests, avoiding an additional migration dependency for this small SQLite prototype. This is a proposed implementation choice. Adopt Alembic instead if an implementation-time compatibility/maintainability check justifies it; document that change and preserve migration/recovery acceptance.
+
+## ADR-005 — Contract and validation order
+
+Decision: freeze independent expected cases before the production evaluator; make OpenAPI the API schema source and produce a checked frontend contract during M2/M4. The browser owns selection/drafts only, never the authoritative evidence or permission decision.
+
+Reason: avoids self-validating tests and frontend-only state. Keep simulator hidden truth outside policy imports. A correct evidence-aware reference may match QualityOS. No comparative manufacturing superiority follows from corpus parity.
+
+## ADR-006 — Historical physical gates and current software scope
+
+Decision: follow the latest QualityOS handoff for software scope. Earlier reassessment requests for a physical PackPair feasibility experiment gate physical/statistical efficacy claims, not this explicitly synthetic software product.
+
+Reason: the handoff explicitly changes PackPair from adaptive test allocation into a qualification applicability workflow. Do not revive the earlier RightStart recommendation, add utility-air modules or claim an unearned sample-efficiency improvement. Physical observations may be added only under their own provenance and approved protocol.
+
+## Future ADR template
+
+Record the decision, implementation evidence, alternatives, affected contracts/tests and migration implications. Use observed results only after those checks actually execute. Do not edit source research to make it appear that a later architectural decision was always part of the original work.
+
+## ADR-007 — Implementation authorization and local core
+
+The user's later instruction explicitly starts implementation. It supersedes ADR-002's temporary preparation-only boundary. Follow M0–M6 without routine approval pauses; maintain user-only Git and preserve original inputs. No slide, resume, external communication or public deployment is authorized. The resulting application is local SYNTHETIC_DEMO only; the database forbids another mode, so bench and synthetic evidence cannot mix.
+
+## ADR-008 — Offline dependency fallback
+
+External pip/npm downloads failed under the sandbox (Windows socket permission error 10013 and unavailable offline metadata). A clean Python environment could not fetch packages. The working `.venv` was configured with `--system-site-packages`, exposing existing tested versions read-only. This is a product-local launcher, not a fully isolated dependency installation. Global installations were not modified. `requirements.lock.txt` records the 41-distribution declared runtime/test dependency closure, rather than an unrelated global freeze.
+
+For npm, dependency files were restored from the observed local TRACKSHIFT dependency installation, without copying its application code or configuration. Every declared package version was verified. `npm install --package-lock-only --offline --ignore-scripts` subsequently succeeded and pruned/resolved the product lock. The product now builds using its own manifests, source and dependency directory. Network-enabled clean `npm ci`/pip installation remains unverified. Node 25 is the observed tested version, not an LTS support claim.
+
+Official documentation consulted: [FastAPI testing](https://fastapi.tiangolo.com/tutorial/testing/) and [SQLAlchemy SQLite transaction behavior](https://docs.sqlalchemy.org/en/20/dialects/sqlite.html). In particular, explicit read BEGIN pins coherent multi-query snapshots; write BEGIN IMMEDIATE serializes check/use.
+
+## ADR-009 — Typed registry and shared command boundary
+
+Use an entity registry (`kind` plus validated JSON projection), composite workspace foreign keys on relational evidence edges, and immutable event/decision/audit tables instead of dozens of mostly empty entity-specific tables. Commands validate referenced type, exact workspace, units, transitions and identity before one serialized commit. The pure policy contains no DB/UI/scenario/evaluation imports. The actual SQLite schema is versioned by ordered transactional SQL migrations.
+
+Tradeoff: critical JSON references rely on service validation in addition to relational constraints; this is not a fully normalized industrial schema. Test direct cross-workspace calls and FK enforcement. Full record snapshots simplify historical replay but grow with entity count; the measured 10k-event fixture does not establish 10k-entity performance. Retention, pagination and finer projections belong to an industrial scaling phase.
+
+Expose one typed command envelope at `/workspaces/{id}/commands/{operation}`, rather than a different transport route for each entity. Operation-specific Pydantic models reject extra fields. Generated OpenAPI and command schemas are versioned under `docs/contracts`; frontend snapshot types are checked TypeScript declarations with real API/browser validation, not automatically generated clients. No arbitrary rule expressions or policy editor are exposed; protocol v1 is a fixed, explicitly assumed demo policy.
+
+## ADR-010 — Stable authorization with pinned proof
+
+The applicability fingerprint binds scope and immutable policy. The reviewed decision ID binds a specific immutable evidence cut; a permit stores its sufficient supporting IDs and a separate evidence fingerprint including reference dependencies. Additional harmless records do not revoke that pinned set. At-use validation checks current adverse/conflicting evidence, active holds, scope/policy, pinned dependency validity, expiry and unit budget inside the same write transaction. Existing persisted pre-fingerprint permits retain the earlier explicit supporting-ID validity checks; newly issued permits include the additional digest.
+
+Workspace revision is a conservative CAS boundary: unrelated concurrent changes can require a fresh review, but do not automatically revoke an independent permit. Idempotency receipt lookup precedes new CAS validation. The browser retains the original key/body revision after an ambiguous network failure; a real-browser dropped-response test verifies exactly one committed effect.
+
+## ADR-011 — Specimen dwell, fresh verification and late impact
+
+Functional dwell is measured from each identified specimen's observation time, not merely study creation. Functional and torque endpoints must match the same specimen/study; the functional outcome remains independently entered and never inferred from torque. Exact decimal inputs have at most 18 digits and exponent -12 to 12 to avoid silent rounding/resource overflow in this engineering demo.
+
+Action effectiveness requires an independently sufficient fresh post-action qualification; old applicable studies cannot fill gaps in a sparse fresh study. Known adverse evidence remains visible. Functional corrections append a successor and correction fact; correcting an already superseded result requires naming its latest replacement. Both revoked measurement dependencies and superseded functional dependencies identify prior potentially affected units. Missing genealogy broadens that retrospective population visibly, without calling those units defective or scrapped.
+
+## ADR-012 — Local UI, browser validation and audit separation
+
+Use native CSS/SVG, bundled fonts and the warm light/forest system, with four routes and shared backend state. No external design service or graphics dependency is required. Local draft/selection state cannot authorize work. Historical views are read-only; offline/context transitions disable writes; rejected stale commands retain the draft and require renewed human review.
+
+Use a dedicated hidden Edge headless profile and CDP port 9239 for browser checks. This environment required `--in-process-gpu --no-sandbox` for that disposable local QA browser; these flags are a test-runner limitation, not an application deployment recommendation. Do not use a personal browser profile or expose that port externally. No Playwright/axe or certified accessibility audit is claimed. Real keyboard/focus checks, responsive screenshots and a computed-style contrast screen are recorded separately.
+
+Decision creation and snapshot/export reads enter append-only audit using actual system time; cursor polling itself does not create domain events or invalidate permits. Export uses one domain cut and includes events, historical decisions, actual-time audit, provenance and a semantic digest. Audit is append-only through this application, not tamper-proof against the machine administrator.
+
+## ADR-013 — Missing local original PDF
+
+Final integrity verification confirmed all 24 copied specification/reassessment files unchanged, but found the original PDF absent from both expected local locations. Keep the original manifest and record a missing entry; do not manufacture a passing hash check. The published four-page PDF was reread through the web tool. Restoring its binary locally was blocked by the same network restriction as package downloads. [SOURCE_STATUS.md](SOURCE_STATUS.md) records the URL, expected hash, current limit and optional non-overwriting restoration command. The application and its tests have no runtime dependency on that binary.

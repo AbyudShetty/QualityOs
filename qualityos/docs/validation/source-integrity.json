@@ -1,0 +1,135 @@
+{
+  "checked_at": "2026-10-30T14:29:53.101863+00:00",
+  "files": [
+    {
+      "path": "qualityos_handoff_2026-10-30_01/ARCHITECTURE.md",
+      "sha256": "0b45a6ff1b8c1e7a92266fc836f927b7356b4e0232bd28ab3ae8f62fe69ee6c4",
+      "matched": true
+    },
+    {
+      "path": "qualityos_handoff_2026-10-30_01/CODEX1_HANDOFF.md",
+      "sha256": "db7d3d65288df8c8648abbf5e065175bd9be25bcad25de1c029a15a65257c18c",
+      "matched": true
+    },
+    {
+      "path": "qualityos_handoff_2026-10-30_01/COMPETITION_SLIDE.md",
+      "sha256": "e4d3435a67b4c0402190da1413d43d0c878942de6a8a41cb95dc87fecfd7909a",
+      "matched": true
+    },
+    {
+      "path": "qualityos_handoff_2026-10-30_01/DATA_MODEL.md",
+      "sha256": "2c4f7e19b714dd4966fec2fd45a2f99288bda34934670dc7df0703762ce984b5",
+      "matched": true
+    },
+    {
+      "path": "qualityos_handoff_2026-10-30_01/IMPLEMENTATION_PLAN.md",
+      "sha256": "4a9b2cda9c7abae7b0f071d99f6be8bc031e6964ba60ca228bdd6cbfcc09eb19",
+      "matched": true
+    },
+    {
+      "path": "qualityos_handoff_2026-10-30_01/OPEN_QUESTIONS.md",
+      "sha256": "5d56b45d38c8a3c714063da90c52795bb4a707440c239c363fef255ddb8e9b2c",
+      "matched": true
+    },
+    {
+      "path": "qualityos_handoff_2026-10-30_01/PRODUCT_SPEC.md",
+      "sha256": "836e1300707aa193ca11b82918a7fbf21c87f527c78c00153291a595268008bb",
+      "matched": true
+    },
+    {
+      "path": "qualityos_handoff_2026-10-30_01/README.md",
+      "sha256": "22c0eca194748948480ac936a6db0ada8cf44be9b595415c18a565bbbb246646",
+      "matched": true
+    },
+    {
+      "path": "qualityos_handoff_2026-10-30_01/RESEARCH_AND_DECISIONS.md",
+      "sha256": "a6dba4f94ef938adf8f6f836d37484497fbceee951761a75cb62ee6e7b128910",
+      "matched": true
+    },
+    {
+      "path": "qualityos_handoff_2026-10-30_01/UX_SPEC.md",
+      "sha256": "4499dfe39b9cfb0a8db85846442fc65854b7e8b0ac8cf4a8eba0bd277921a7bb",
+      "matched": true
+    },
+    {
+      "path": "qualityos_handoff_2026-10-30_01/VALIDATION_PLAN.md",
+      "sha256": "65c0c53c81fe93296933d5a0d0f4a32d031a277dc29ee651e5b1966470778219",
+      "matched": true
+    },
+    {
+      "path": "reassessment_2026-10-30_01/01_requirements_and_access.md",
+      "sha256": "2b02078f2f9d832dba802a7797e61aefde048d12a60be3452ee83ee4f0816c0d",
+      "matched": true
+    },
+    {
+      "path": "reassessment_2026-10-30_01/02_capability_audit.md",
+      "sha256": "33fbccf13cad257dfd92fc7b150c6053f9b423191e6576efcfd97c5b3e35d60e",
+      "matched": true
+    },
+    {
+      "path": "reassessment_2026-10-30_01/03_evidence_register.md",
+      "sha256": "22db89a52c280df0fc6eade071484eba000be164274cda9073f5c44cf55cca77",
+      "matched": true
+    },
+    {
+      "path": "reassessment_2026-10-30_01/04_candidates.md",
+      "sha256": "3f09cf65653654591ad80787b1e62a96ce602e1133e074668e9c2f1df1ebe5e3",
+      "matched": true
+    },
+    {
+      "path": "reassessment_2026-10-30_01/05_rankings.md",
+      "sha256": "43b13e7c81b76d1cc2ee27ff8de71943121f6a2af78203148ce524e7bfaac048",
+      "matched": true
+    },
+    {
+      "path": "reassessment_2026-10-30_01/06_adversarial_review.md",
+      "sha256": "99be5cc6aa82a9603cec5deb4167c8febbb6a7da8cd5da3dbe4a3b60d3c10325",
+      "matched": true
+    },
+    {
+      "path": "reassessment_2026-10-30_01/07_recommendation_and_validation.md",
+      "sha256": "72d565acdfd9d7baee193e1a580df5528a1703fd4e8de28afea5c232a8c5e94e",
+      "matched": true
+    },
+    {
+      "path": "reassessment_2026-10-30_01/08_execution_and_quality_gate.md",
+      "sha256": "4ac917fbd50fa3311808914f81e386317ae55192f7d85767458d32c0f163ff6a",
+      "matched": true
+    },
+    {
+      "path": "reassessment_2026-10-30_01/candidate_scores.csv",
+      "sha256": "c3dd893516b1e0ced6e90759478b04db771b450c1877e0dffb3e3c1a5ee3a069",
+      "matched": true
+    },
+    {
+      "path": "reassessment_2026-10-30_01/candidates.json",
+      "sha256": "8eecfcc349e32481dd0da413f3345df190023e69f052b11eadd1e2530ca12982",
+      "matched": true
+    },
+    {
+      "path": "reassessment_2026-10-30_01/evidence.json",
+      "sha256": "54665fc7362b3e71109d4f2315716a94ade2b4a6079693cdc7f625d89674a2f8",
+      "matched": true
+    },
+    {
+      "path": "reassessment_2026-10-30_01/README.md",
+      "sha256": "e8f7f233446b6080cac0d7a2c19b19aa8291543a68fcd1e0b16f6dddb69a21b5",
+      "matched": true
+    },
+    {
+      "path": "reassessment_2026-10-30_01/research_log.json",
+      "sha256": "f2156fd9dd3c49bfb70cef920905d99b153f820c084faffe67a3dfb1d1bf93b1",
+      "matched": true
+    },
+    {
+      "path": "cd41k3tsm5x.pdf",
+      "expected_sha256": "4e4d83b3f85eff3b12383e2ad06289551bb0324d224cc952afe37f906c431cc0",
+      "matched": false,
+      "status": "MISSING_LOCAL_SOURCE"
+    }
+  ],
+  "all_available_matched": true,
+  "all_manifest_files_present": false,
+  "matched_count": 24,
+  "missing_count": 1
+}

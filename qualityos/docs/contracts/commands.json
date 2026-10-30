@@ -1,0 +1,560 @@
+{
+  "change_context": {
+    "additionalProperties": false,
+    "properties": {
+      "run_id": {
+        "title": "Run Id",
+        "type": "string"
+      },
+      "field": {
+        "enum": [
+          "closure_lot_id",
+          "bottle_lot_id",
+          "config_id",
+          "lineage"
+        ],
+        "title": "Field",
+        "type": "string"
+      },
+      "value": {
+        "title": "Value",
+        "type": "string"
+      }
+    },
+    "required": [
+      "run_id",
+      "field",
+      "value"
+    ],
+    "title": "Context",
+    "type": "object"
+  },
+  "open_study": {
+    "additionalProperties": false,
+    "properties": {
+      "run_id": {
+        "title": "Run Id",
+        "type": "string"
+      },
+      "action_id": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Action Id"
+      }
+    },
+    "required": [
+      "run_id"
+    ],
+    "title": "Study",
+    "type": "object"
+  },
+  "refresh_source": {
+    "additionalProperties": false,
+    "properties": {
+      "run_id": {
+        "title": "Run Id",
+        "type": "string"
+      },
+      "complete": {
+        "default": true,
+        "title": "Complete",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "run_id"
+    ],
+    "title": "Refresh",
+    "type": "object"
+  },
+  "advance": {
+    "additionalProperties": false,
+    "properties": {
+      "hours": {
+        "maximum": 48,
+        "minimum": 1,
+        "title": "Hours",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "hours"
+    ],
+    "title": "Advance",
+    "type": "object"
+  },
+  "calibrate": {
+    "additionalProperties": false,
+    "properties": {
+      "instrument_id": {
+        "title": "Instrument Id",
+        "type": "string"
+      },
+      "method_id": {
+        "maxLength": 100,
+        "minLength": 3,
+        "title": "Method Id",
+        "type": "string"
+      },
+      "basis": {
+        "maxLength": 1000,
+        "minLength": 10,
+        "title": "Basis",
+        "type": "string"
+      }
+    },
+    "required": [
+      "instrument_id",
+      "method_id",
+      "basis"
+    ],
+    "title": "Calibrate",
+    "type": "object"
+  },
+  "revoke_calibration": {
+    "additionalProperties": false,
+    "properties": {
+      "calibration_id": {
+        "title": "Calibration Id",
+        "type": "string"
+      },
+      "effective_from": {
+        "title": "Effective From",
+        "type": "string"
+      },
+      "effective_until": {
+        "title": "Effective Until",
+        "type": "string"
+      }
+    },
+    "required": [
+      "calibration_id",
+      "effective_from",
+      "effective_until"
+    ],
+    "title": "Revoke",
+    "type": "object"
+  },
+  "measure": {
+    "additionalProperties": false,
+    "properties": {
+      "study_id": {
+        "title": "Study Id",
+        "type": "string"
+      },
+      "calibration_id": {
+        "title": "Calibration Id",
+        "type": "string"
+      },
+      "value": {
+        "maxLength": 40,
+        "title": "Value",
+        "type": "string"
+      },
+      "unit": {
+        "const": "N_m",
+        "default": "N_m",
+        "enum": [
+          "N_m"
+        ],
+        "title": "Unit",
+        "type": "string"
+      },
+      "half_width": {
+        "default": "0.02",
+        "maxLength": 40,
+        "title": "Half Width",
+        "type": "string"
+      },
+      "uncertainty_kind": {
+        "default": "ENGINEERING_BOUND",
+        "enum": [
+          "ENGINEERING_BOUND",
+          "EXPANDED_UNCERTAINTY",
+          "UNKNOWN"
+        ],
+        "title": "Uncertainty Kind",
+        "type": "string"
+      },
+      "basis": {
+        "default": "Assumed engineering bound for synthetic software demonstration",
+        "maxLength": 500,
+        "minLength": 10,
+        "title": "Basis",
+        "type": "string"
+      },
+      "count": {
+        "default": 3,
+        "maximum": 12,
+        "minimum": 1,
+        "title": "Count",
+        "type": "integer"
+      },
+      "occurred_at": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Occurred At"
+      }
+    },
+    "required": [
+      "study_id",
+      "calibration_id",
+      "value"
+    ],
+    "title": "Measure",
+    "type": "object"
+  },
+  "functional": {
+    "additionalProperties": false,
+    "properties": {
+      "study_id": {
+        "title": "Study Id",
+        "type": "string"
+      },
+      "outcome": {
+        "enum": [
+          "PASS",
+          "FAIL",
+          "INCONCLUSIVE"
+        ],
+        "title": "Outcome",
+        "type": "string"
+      }
+    },
+    "required": [
+      "study_id",
+      "outcome"
+    ],
+    "title": "Functional",
+    "type": "object"
+  },
+  "comment": {
+    "additionalProperties": false,
+    "properties": {
+      "run_id": {
+        "title": "Run Id",
+        "type": "string"
+      },
+      "text": {
+        "maxLength": 2000,
+        "minLength": 1,
+        "title": "Text",
+        "type": "string"
+      }
+    },
+    "required": [
+      "run_id",
+      "text"
+    ],
+    "title": "Note",
+    "type": "object"
+  },
+  "investigate": {
+    "additionalProperties": false,
+    "properties": {
+      "run_id": {
+        "title": "Run Id",
+        "type": "string"
+      },
+      "title": {
+        "maxLength": 150,
+        "minLength": 3,
+        "title": "Title",
+        "type": "string"
+      },
+      "problem_definition": {
+        "maxLength": 2000,
+        "minLength": 10,
+        "title": "Problem Definition",
+        "type": "string"
+      }
+    },
+    "required": [
+      "run_id",
+      "title",
+      "problem_definition"
+    ],
+    "title": "Investigate",
+    "type": "object"
+  },
+  "hypothesis": {
+    "additionalProperties": false,
+    "properties": {
+      "investigation_id": {
+        "title": "Investigation Id",
+        "type": "string"
+      },
+      "statement": {
+        "maxLength": 500,
+        "minLength": 5,
+        "title": "Statement",
+        "type": "string"
+      },
+      "mechanism": {
+        "maxLength": 1000,
+        "minLength": 5,
+        "title": "Mechanism",
+        "type": "string"
+      },
+      "supporting_ids": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 30,
+        "title": "Supporting Ids",
+        "type": "array"
+      },
+      "refuting_ids": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 30,
+        "title": "Refuting Ids",
+        "type": "array"
+      }
+    },
+    "required": [
+      "investigation_id",
+      "statement",
+      "mechanism"
+    ],
+    "title": "Hypothesis",
+    "type": "object"
+  },
+  "propose_action": {
+    "additionalProperties": false,
+    "properties": {
+      "investigation_id": {
+        "title": "Investigation Id",
+        "type": "string"
+      },
+      "config_id": {
+        "title": "Config Id",
+        "type": "string"
+      },
+      "verification_plan": {
+        "maxLength": 1000,
+        "minLength": 10,
+        "title": "Verification Plan",
+        "type": "string"
+      }
+    },
+    "required": [
+      "investigation_id",
+      "config_id",
+      "verification_plan"
+    ],
+    "title": "Propose",
+    "type": "object"
+  },
+  "approve_action": {
+    "additionalProperties": false,
+    "properties": {
+      "action_id": {
+        "title": "Action Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "action_id"
+    ],
+    "title": "Action",
+    "type": "object"
+  },
+  "execute_action": {
+    "additionalProperties": false,
+    "properties": {
+      "action_id": {
+        "title": "Action Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "action_id"
+    ],
+    "title": "Action",
+    "type": "object"
+  },
+  "assess_action": {
+    "additionalProperties": false,
+    "properties": {
+      "action_id": {
+        "title": "Action Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "action_id"
+    ],
+    "title": "Action",
+    "type": "object"
+  },
+  "resolve_hold": {
+    "additionalProperties": false,
+    "properties": {
+      "run_id": {
+        "title": "Run Id",
+        "type": "string"
+      },
+      "decision_id": {
+        "title": "Decision Id",
+        "type": "string"
+      },
+      "fingerprint": {
+        "maxLength": 64,
+        "minLength": 64,
+        "title": "Fingerprint",
+        "type": "string"
+      }
+    },
+    "required": [
+      "run_id",
+      "decision_id",
+      "fingerprint"
+    ],
+    "title": "Review",
+    "type": "object"
+  },
+  "authorize": {
+    "additionalProperties": false,
+    "properties": {
+      "run_id": {
+        "title": "Run Id",
+        "type": "string"
+      },
+      "decision_id": {
+        "title": "Decision Id",
+        "type": "string"
+      },
+      "fingerprint": {
+        "maxLength": 64,
+        "minLength": 64,
+        "title": "Fingerprint",
+        "type": "string"
+      },
+      "max_units": {
+        "default": 20,
+        "maximum": 100,
+        "minimum": 1,
+        "title": "Max Units",
+        "type": "integer"
+      },
+      "minutes": {
+        "default": 15,
+        "maximum": 60,
+        "minimum": 1,
+        "title": "Minutes",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "run_id",
+      "decision_id",
+      "fingerprint"
+    ],
+    "title": "Authorize",
+    "type": "object"
+  },
+  "produce": {
+    "additionalProperties": false,
+    "properties": {
+      "run_id": {
+        "title": "Run Id",
+        "type": "string"
+      },
+      "units": {
+        "default": 5,
+        "maximum": 100,
+        "minimum": 1,
+        "title": "Units",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "run_id"
+    ],
+    "title": "Produce",
+    "type": "object"
+  },
+  "disposition": {
+    "additionalProperties": false,
+    "properties": {
+      "unit_ids": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 100,
+        "minItems": 1,
+        "title": "Unit Ids",
+        "type": "array"
+      },
+      "disposition": {
+        "enum": [
+          "HELD",
+          "ACCEPTED",
+          "REJECTED"
+        ],
+        "title": "Disposition",
+        "type": "string"
+      }
+    },
+    "required": [
+      "unit_ids",
+      "disposition"
+    ],
+    "title": "Disposition",
+    "type": "object"
+  },
+  "correct_evidence": {
+    "additionalProperties": false,
+    "properties": {
+      "evidence_id": {
+        "title": "Evidence Id",
+        "type": "string"
+      },
+      "outcome": {
+        "enum": [
+          "PASS",
+          "FAIL",
+          "INCONCLUSIVE"
+        ],
+        "title": "Outcome",
+        "type": "string"
+      }
+    },
+    "required": [
+      "evidence_id",
+      "outcome"
+    ],
+    "title": "Correction",
+    "type": "object"
+  },
+  "complete_run": {
+    "additionalProperties": false,
+    "properties": {
+      "run_id": {
+        "title": "Run Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "run_id"
+    ],
+    "title": "Run",
+    "type": "object"
+  }
+}

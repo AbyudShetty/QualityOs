@@ -1,0 +1,27 @@
+{
+  "provenance": "SYNTHETIC",
+  "checks": [
+    "Create isolated workspace through UI",
+    "Lost committed response retries one persisted effect",
+    "Dialog traps keyboard focus and Escape dismisses",
+    "Network outage pauses actions and recovers",
+    "Outside-scope change holds only affected run",
+    "Invalid reference cannot supply passing evidence",
+    "Independent delayed failure rejects first condition",
+    "Investigation and approved action lifecycle",
+    "Fresh verification, explicit QA resolution and authorization",
+    "Evidence graph keyboard activation opens source record",
+    "Historical as-known view is explicit",
+    "Late revocation scopes five potentially affected units",
+    "Reload reconstructs server state",
+    "All four workspaces at 1024 px without page overflow",
+    "All four workspaces at 390 px without page overflow",
+    "Independent evaluation runs from UI and persists report"
+  ],
+  "screenshots": [
+    "01-line-ready.png"
+  ],
+  "errors": [],
+  "completed_at": "2026-10-30T14:23:03.934Z",
+  "workspace": "workspace-68304f471eb0"
+}
