@@ -6,17 +6,21 @@
 
 | Check | Executed result | Reproducible evidence |
 |---|---|---|
-| Backend domain/API/storage/property/workflow tests | 53 passed | [checks.json](validation/checks.json), `verify.ps1`, `backend/tests` |
+| Backend domain/API/storage/property/workflow tests | 58 passed, including guided-story boundaries | [checks.json](validation/checks.json), `verify.ps1`, `backend/tests` |
 | Frontend presentation boundary tests | 3 passed | [checks.json](validation/checks.json), `web/src/api.test.ts` |
 | TypeScript and production build | Passed | [checks.json](validation/checks.json); built SPA served locally |
 | Independent declared outcome corpus | 20/20 QualityOS and reference matches | [evaluation-v1.json](validation/evaluation-v1.json), frozen `scenarios/expected-v1.json` |
 | Actual browser workflow | 16 checks passed in the final authenticated-session run, no captured unhandled runtime/console errors | [browser.json](validation/browser.json), `web/scripts/browser-check.mjs` |
+| First-visit guided story | 11 checks passed, including fresh login, all 24 reviewed actions, control comparison, resume and mobile | [story-browser.json](validation/story-browser.json), [UX record](UX_GUIDED_STORY.md) |
 | Fresh store and actual process restart | Same three units, original receipt and semantic digest after restart | [recovery.json](validation/recovery.json), `scripts/restart_check.py` |
-| Contrast screen | No failures among 1,086 checked text elements across four current page states | [contrast.json](validation/contrast.json), `web/scripts/contrast-check.mjs` |
+| Original core contrast screen | No failures among 1,086 checked text elements in the initial core review | [contrast.json](validation/contrast.json), `web/scripts/contrast-check.mjs` |
+| Guided-story contrast screen | No failures among 1,347 checked text elements across Start here and four guided page states | [contrast-story.json](validation/contrast-story.json) |
 | Preserved source files | All 24 available handoff/reassessment hashes matched; original PDF missing locally | [source-integrity.json](validation/source-integrity.json), [source status](SOURCE_STATUS.md) |
-| 10,000-event software fixture | Snapshot p50 8.497 ms / p95 10.249 ms; read plus comment p50 22.632 ms / p95 26.320 ms; replay digest matched | [performance.json](validation/performance.json), `scripts/benchmark.py` |
+| Initial core 10,000-event software fixture | Snapshot p50 8.497 ms / p95 10.249 ms; read plus comment p50 22.632 ms / p95 26.320 ms; replay digest matched; retained initial benchmark | [performance.json](validation/performance.json), `scripts/benchmark.py` |
 
 The final browser run used the actual built frontend against the restarted API over localhost. Initial fresh-login smoke and backend/HTTP recovery tests separately exercised login; the final browser profile already had an authenticated session. The script performs commands through application forms and inspects actual persisted responses. It does not set decisions directly.
+
+The subsequent first-visit revision adds a separately tested, server-derived story without changing the pure quality policy. Its dedicated browser run explicitly cleared only its own QA profile's cookies/local storage and exercised actual fresh login. See UX_GUIDED_STORY.md for scope and cognitive-usability limits. The retained initial performance fixture was not a guided-story load benchmark.
 
 One existing Starlette `multipart` import PendingDeprecationWarning remains. It does not fail a test. External dependency downloads were blocked; this environment uses the explicitly documented tested local fallback, not a claimed clean online installation.
 

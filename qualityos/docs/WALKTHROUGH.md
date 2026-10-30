@@ -2,6 +2,8 @@
 
 Use `qa` with the privately generated local password. Every action below produces real persisted synthetic state; no factory observation is implied. Create a new workspace for each clean presentation. This is a walkthrough script, not a recorded or timed three-minute claim.
 
+For a first visit, open `/start` and choose Start the guided story. The app now explains the situation, unfamiliar terms, the purpose of each action and what to look for afterward. It creates a separate guided workspace and follows the same guarded commands described below. Supplied synthetic inputs are reviewed in a dialog and can be adjusted. Changing a result may take the story off its expected path; the guide preserves that choice and explains it instead of forcing a passing ending. The optional independent-line comparison is available immediately after the cap change.
+
 ## W1 — Qualification becomes stale and recovers
 
 1. Open Line. The initial B01/C01/configuration-v1 proof ACCEPTS, while the run is only Ready for QA. Authorize simulated run with a review reason, then Continue simulation for two units. Readiness, permission and recorded production are separate.
@@ -36,4 +38,4 @@ The S1/S2/S3 selector labels a scenario family. All begin from the same qualifie
 
 Line → Independent evaluation → Run independent evaluation persists the frozen-case comparison. QualityOS and the competent evidence-aware reference can both match all declared outcomes. That parity is shown deliberately. This is software-case correctness, not an estimated factory safety rate, classifier accuracy or physical waste reduction.
 
-Export receipt downloads the current domain cut, source history, immutable decisions, actual-time audit and provenance as JSON. Export does not include passwords or session tokens. Raw local browser-review screenshots are in ignored `var/browser-review`; reproducible reviewed summaries are in `docs/validation`.
+Export workspace downloads the current workspace domain cut, source history, immutable decisions, actual-time audit and provenance as JSON. It is a workspace-wide export, including when inspecting an earlier decision on screen. Export does not include passwords or session tokens. Raw local browser-review screenshots are in ignored `var/browser-review`; guided-story screenshots are in `var/story-review`. Reproducible reviewed summaries are in `docs/validation`.

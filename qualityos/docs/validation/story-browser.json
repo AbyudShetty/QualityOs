@@ -1,0 +1,177 @@
+{
+  "provenance": "SYNTHETIC",
+  "checks": [
+    "Fresh login leads to a purpose-led start screen",
+    "Purpose, fictional context and a clear starting action are visible",
+    "Create a separate persisted guided workspace with no scenario-code choice",
+    "Optional comparison explains why only the affected run paused",
+    "Reload resumes from the saved evidence, not a local step counter",
+    "Independent exploration can hide and restore the story",
+    "All 24 reviewed actions complete the actual recovery workflow",
+    "Completion explains what was established and its synthetic limits",
+    "Welcome and guided workspaces fit a 390 px viewport",
+    "Story conclusion connects to inspectable evidence",
+    "Returning visitors resume their own stored story"
+  ],
+  "steps": [
+    {
+      "id": "authorize_initial",
+      "decision": "ACCEPT",
+      "run_state": "READY_FOR_QA",
+      "revision": 1
+    },
+    {
+      "id": "produce_initial",
+      "decision": "ACCEPT",
+      "run_state": "AUTHORIZED",
+      "revision": 2
+    },
+    {
+      "id": "change_caps",
+      "decision": "ACCEPT",
+      "run_state": "AUTHORIZED",
+      "revision": 3
+    },
+    {
+      "id": "open_first",
+      "decision": "HOLD",
+      "run_state": "HELD",
+      "revision": 4
+    },
+    {
+      "id": "measure_old",
+      "decision": "HOLD",
+      "run_state": "HELD",
+      "revision": 5
+    },
+    {
+      "id": "new_reference",
+      "decision": "HOLD",
+      "run_state": "HELD",
+      "revision": 6
+    },
+    {
+      "id": "measure_valid",
+      "decision": "HOLD",
+      "run_state": "HELD",
+      "revision": 7
+    },
+    {
+      "id": "wait_first",
+      "decision": "HOLD",
+      "run_state": "HELD",
+      "revision": 8
+    },
+    {
+      "id": "source_first",
+      "decision": "HOLD",
+      "run_state": "HELD",
+      "revision": 9
+    },
+    {
+      "id": "fail_first",
+      "decision": "HOLD",
+      "run_state": "HELD",
+      "revision": 10
+    },
+    {
+      "id": "investigate",
+      "decision": "REJECT",
+      "run_state": "HELD",
+      "revision": 11
+    },
+    {
+      "id": "hypothesis",
+      "decision": "REJECT",
+      "run_state": "HELD",
+      "revision": 12
+    },
+    {
+      "id": "propose",
+      "decision": "REJECT",
+      "run_state": "HELD",
+      "revision": 13
+    },
+    {
+      "id": "approve",
+      "decision": "REJECT",
+      "run_state": "HELD",
+      "revision": 14
+    },
+    {
+      "id": "execute",
+      "decision": "REJECT",
+      "run_state": "HELD",
+      "revision": 15
+    },
+    {
+      "id": "open_fresh",
+      "decision": "HOLD",
+      "run_state": "HELD",
+      "revision": 16
+    },
+    {
+      "id": "measure_fresh",
+      "decision": "HOLD",
+      "run_state": "HELD",
+      "revision": 17
+    },
+    {
+      "id": "wait_fresh",
+      "decision": "HOLD",
+      "run_state": "HELD",
+      "revision": 18
+    },
+    {
+      "id": "source_fresh",
+      "decision": "HOLD",
+      "run_state": "HELD",
+      "revision": 19
+    },
+    {
+      "id": "pass_fresh",
+      "decision": "HOLD",
+      "run_state": "HELD",
+      "revision": 20
+    },
+    {
+      "id": "assess",
+      "decision": "ACCEPT",
+      "run_state": "HELD",
+      "revision": 21
+    },
+    {
+      "id": "resolve",
+      "decision": "ACCEPT",
+      "run_state": "HELD",
+      "revision": 22
+    },
+    {
+      "id": "authorize_new",
+      "decision": "ACCEPT",
+      "run_state": "READY_FOR_QA",
+      "revision": 23
+    },
+    {
+      "id": "produce_new",
+      "decision": "ACCEPT",
+      "run_state": "AUTHORIZED",
+      "revision": 24
+    },
+    {
+      "id": "complete",
+      "decision": "ACCEPT",
+      "run_state": "AUTHORIZED",
+      "revision": 25
+    }
+  ],
+  "errors": [],
+  "completed_at": "2026-10-30T15:57:48.247Z",
+  "workspace": "workspace-9fc9079be1b6",
+  "restart_observation": {
+    "at": "2026-10-30T16:03:10.774Z",
+    "basis": "Same persisted story after actual local backend process restart",
+    "status": "COMPLETE",
+    "units": 7
+  }
+}

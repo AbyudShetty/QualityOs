@@ -35,6 +35,7 @@ class Login(Model):
 class CreateWorkspace(Model):
     name: str = Field(default="Packaging qualification", min_length=1, max_length=100)
     scenario: Literal["S1", "S2", "S3"] = "S1"
+    guided: bool = False
 
 
 class Command(Model):
@@ -356,7 +357,7 @@ def create_app(db_path=None, credentials_path=None):
 
     @app.post("/api/v1/demo/workspaces")
     def create_workspace(body: CreateWorkspace, request: Request):
-        return service.create_workspace(actor(request, True), body.name, body.scenario)
+        return service.create_workspace(actor(request, True), body.name, body.scenario, body.guided)
 
     @app.get("/api/v1/workspaces/{wid}/snapshot")
     def snapshot(

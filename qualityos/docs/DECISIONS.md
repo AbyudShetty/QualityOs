@@ -96,3 +96,15 @@ Decision creation and snapshot/export reads enter append-only audit using actual
 ## ADR-013 — Missing local original PDF
 
 Final integrity verification confirmed all 24 copied specification/reassessment files unchanged, but found the original PDF absent from both expected local locations. Keep the original manifest and record a missing entry; do not manufacture a passing hash check. The published four-page PDF was reread through the web tool. Restoring its binary locally was blocked by the same network restriction as package downloads. [SOURCE_STATUS.md](SOURCE_STATUS.md) records the URL, expected hash, current limit and optional non-overwriting restoration command. The application and its tests have no runtime dependency on that binary.
+
+## ADR-014 — Explain the decision before presenting operational detail
+
+The user reported not understanding the application's purpose or how to navigate it. Add `/start` as an orientation page, with a concrete bottle/cap question, a fictional illustrated scenario and a clear guided entry. This is an introduction to the same four workspaces, not another manufacturing module. Direct operational URLs and unguided exploration remain supported.
+
+`CreateWorkspace.guided=true` creates a new S1 workspace containing a versioned guide identity in its initial immutable event. It leaves existing workspaces unchanged and requires no database schema migration. `journey.py` derives the current explanation/action proposal from saved studies, observations, actions, holds, permissions and units. It cannot authorize work, set a decision or mark a lesson complete because a user clicked Next. Domain policy does not import the journey module.
+
+New command-created records retain their actual workspace `recorded_revision`, allowing deterministic study/reference selection without inferring identity from display labels or timestamps. Older records remain readable. Historical and independent-control views have explicit read-only/navigation explanations; they do not receive a fabricated progress sequence. QA roles, CAS, idempotency and at-use enforcement remain unchanged.
+
+Guided dialogs present the story's declared fictional input/result and its purpose before the user records it. Defaults do not predict leak physics or claim measured manufacturing results. Editing the supplied outcome or entering nonconforming torque produces a visible detour and preserves the evidence. The complete 24-command path still passes through independent dwell/source confirmation, action verification, explicit hold resolution and QA permission. A completed run does not restart the story merely because its permission has been retired; later affected units produce a separate late-discovery explanation.
+
+Current decision evidence and dependency IDs are prioritized in the bounded graph; historical records remain accessible. Snapshot transitions explicitly announce loading while writes remain blocked. The export button is labelled Export workspace to match its actual scope. No human-time saving or independently validated first-time comprehension improvement is claimed from developer/browser checks.

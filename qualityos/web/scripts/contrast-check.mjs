@@ -3,8 +3,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
+const storyMode=process.env.QUALITYOS_CONTRAST_STORY==='1';
+const storyWorkspace=storyMode?JSON.parse(fs.readFileSync(path.join(root,'var/story-review/story-browser.json'),'utf8')).workspace:null;
 const targets=await (await fetch('http://127.0.0.1:9239/json/list')).json();
-const target=targets.find(t=>t.type==='page'&&t.url.startsWith('http://127.0.0.1:8107/'));
+const target=targets.find(t=>t.type==='page'&&t.url.startsWith('http://127.0.0.1:8107/')&&(!storyWorkspace||t.url.includes(storyWorkspace)));
 if(!target)throw Error('Open the local app in the dedicated QA browser first');
 const socket=new WebSocket(target.webSocketDebuggerUrl);await new Promise((r,j)=>{socket.onopen=r;socket.onerror=j});
 let id=0;const waiting=new Map();socket.onmessage=e=>{const msg=JSON.parse(e.data);if(msg.id){waiting.get(msg.id)?.(msg.result);waiting.delete(msg.id)}};
@@ -13,8 +15,8 @@ async function evaluate(expression){const result=await call('Runtime.evaluate',{
 const reports=[];
 try{
 await call('Page.reload',{ignoreCache:true});await new Promise(r=>setTimeout(r,700));
-for(const page of ['line','evidence','qualification','investigation']){
- await evaluate(`document.querySelectorAll('.sidebar nav button')[${['line','evidence','qualification','investigation'].indexOf(page)}].click()`);
+for(const page of storyMode?['start','line','evidence','qualification','investigation']:['line','evidence','qualification','investigation']){
+ await evaluate(page==='start'?`document.querySelector('.sidebar-home').click()`:`document.querySelectorAll('.sidebar nav button')[${['line','evidence','qualification','investigation'].indexOf(page)}].click()`);
  await new Promise(r=>setTimeout(r,350));
  const scan=await evaluate(`(()=>{
  const rgb=s=>{const m=s.match(/[\\d.]+/g);return m?m.slice(0,3).map(Number):[0,0,0]};
@@ -26,7 +28,7 @@ for(const page of ['line','evidence','qualification','investigation']){
  reports.push({page,...scan});
 }
 const result={created_at:new Date().toISOString(),basis:'Computed solid foreground/background colors; excludes disabled and aria-hidden controls; not a complete accessibility certification',reports};
-fs.writeFileSync(path.join(root,'var/browser-review/contrast-report.json'),JSON.stringify(result,null,2));
+fs.writeFileSync(path.join(root,storyMode?'var/story-review/contrast-story.json':'var/browser-review/contrast-report.json'),JSON.stringify(result,null,2));
 console.log(JSON.stringify(reports.map(r=>({page:r.page,checked:r.checked,failures:r.failures.length,examples:r.failures.slice(0,5)})),null,2));
 if(reports.some(r=>r.failures.length))process.exitCode=1;
 }finally{socket.close()}

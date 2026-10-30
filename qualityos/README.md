@@ -8,7 +8,9 @@ Four connected workspaces use one backend: Line, Evidence, Qualification and Inv
 
 ## Open the local product
 
-If the service is already running, open [QualityOS](http://127.0.0.1:8107). Otherwise run:
+If the service is already running, open [Start here](http://127.0.0.1:8107/start). Choose Start the guided story to follow a fictional cap-delivery change with one explained next action at a time. Saved progress resumes from backend evidence, including after a reload. You can also open an unguided workspace or hide the guide and explore the four operational screens.
+
+Otherwise run:
 
 ```powershell
 Set-Location 'C:/ABYUD/HACKATHONS/LOREAL/qualityos'
@@ -48,6 +50,7 @@ The built frontend and API share port 8107. For frontend development, run `npm r
 The first command runs backend checks, frontend tests, TypeScript/build and isolated contract generation. The second persists the independent synthetic comparison in the current store. Open Line → Independent evaluation to run and inspect it through the UI.
 
 - [Walkthrough: change, hold, investigate, verify, authorize](docs/WALKTHROUGH.md).
+- [First-visit story, design decisions and executed checks](docs/UX_GUIDED_STORY.md).
 - [Executed validation, invariant mapping and limitations](docs/VALIDATION.md).
 - [Architecture, API contracts, migrations and recovery](docs/OPERATIONS.md).
 - [Implementation milestones](docs/PLAN.md) and [decision record](docs/DECISIONS.md).

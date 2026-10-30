@@ -481,6 +481,11 @@
             ],
             "title": "Scenario",
             "default": "S1"
+          },
+          "guided": {
+            "type": "boolean",
+            "title": "Guided",
+            "default": false
           }
         },
         "additionalProperties": false,

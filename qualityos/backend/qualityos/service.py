@@ -80,17 +80,48 @@ class Service:
             },
         )
 
-    def create_workspace(self, actor, name="Packaging qualification", scenario="S1"):
+    def create_workspace(self, actor, name="Packaging qualification", scenario="S1", guided=False):
         if actor["role"] not in {"OPERATOR", "QUALITY_ENGINEER", "ADMIN"}:
             raise Problem(
                 "ROLE_REQUIRED", "A demo operator or administrator must create a workspace", 403
             )
         wid = uid("workspace")
         records = seed_records(wid[-6:] + "-")
+        if guided:
+            if scenario != "S1":
+                raise Problem(
+                    "GUIDED_SCENARIO_REQUIRED", "The guided packaging story uses scenario S1", 422
+                )
+
+            def named(suffix):
+                return next(x for x in records.values() if x["id"].endswith(suffix))
+
+            anchor = named("run-1")
+            gid = uid("guide")
+            records[gid] = {
+                "id": gid,
+                "kind": "guide",
+                "label": "The cap changed. Can the line continue?",
+                "run_id": anchor["id"],
+                "version": "packaging-story-v1",
+                "initial_scope": scope_of(anchor),
+                "replacement_closure_id": named("closure-c02")["id"],
+                "alternate_config_id": named("capper-v2")["id"],
+                "teaching_instrument_id": named("torque-02")["id"],
+                "expired_reference_id": named("calibration-02-old")["id"],
+                "available_at": START,
+                "created_at": START,
+                "provenance": "SYNTHETIC",
+            }
         with self.store.transaction() as c:
             c.execute(
                 text("INSERT INTO workspaces VALUES (:w,:n,:clock,'SYNTHETIC_DEMO',0,0,:v)"),
-                {"w": wid, "n": name, "clock": START, "v": "packpair-v1/" + scenario},
+                {
+                    "w": wid,
+                    "n": name,
+                    "clock": START,
+                    "v": "packpair-v1/" + scenario + ("/guided-story-v1" if guided else ""),
+                },
             )
             ws = self._workspace(c, wid)
             response = self._commit(
@@ -102,7 +133,7 @@ class Service:
                 "WORKSPACE_CREATED",
                 uid("seed"),
                 "local-scenario",
-                {"scenario": scenario},
+                {"scenario": scenario, "guided": guided},
             )
         return {"workspace_id": wid, **response}
 
@@ -380,6 +411,7 @@ class Service:
                 "kind": kind,
                 "available_at": now,
                 "created_at": now,
+                "recorded_revision": ws["revision"] + 1,
                 "provenance": "SYNTHETIC",
                 **data,
             }
@@ -994,7 +1026,7 @@ class Service:
                     "Evidence checks satisfied; QA authorization remains a separate decision",
                 ),
             }
-            return {
+            result = {
                 "workspace": ws,
                 "run": run,
                 "runs": runs
@@ -1019,6 +1051,17 @@ class Service:
                 "provenance": "SYNTHETIC",
                 "time_basis": "SCENARIO_UTC",
             }
+            from .journey import describe_journey
+
+            result["journey"] = describe_journey(
+                run,
+                records,
+                decision,
+                result["clock"],
+                result["impact"],
+                historical=bool(decision_id),
+            )
+            return result
 
     def audit_read(self, wid, actor, action, detail):
         with self.store.transaction() as c:
