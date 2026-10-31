@@ -32,10 +32,27 @@ class Login(Model):
     password: str = Field(min_length=1, max_length=200)
 
 
+class ExperimentSetup(Model):
+    bottle: Literal['ORIGINAL','OTHER','CUSTOM']='ORIGINAL'
+    cap: Literal['ORIGINAL','UNTESTED','COVERED','CUSTOM']='ORIGINAL'
+    machine: Literal['BASELINE','ALTERNATE','CUSTOM']='BASELINE'
+    bottle_name: str=Field(default='',max_length=80)
+    cap_name: str=Field(default='',max_length=80)
+    machine_name: str=Field(default='',max_length=80)
+    machine_torque: str=Field(default='1.00',max_length=40)
+
+
 class CreateWorkspace(Model):
     name: str = Field(default="Packaging qualification", min_length=1, max_length=100)
     scenario: Literal["S1", "S2", "S3"] = "S1"
     guided: bool = False
+    purpose: Literal['USER_EXPERIMENT','AUTOMATION_TEST']='USER_EXPERIMENT'
+    setup: ExperimentSetup | None=None
+
+
+class OrganizeWorkspace(Model):
+    name: str=Field(min_length=1,max_length=100)
+    purpose: Literal['USER_EXPERIMENT','LEGACY_SESSION']
 
 
 class Command(Model):
@@ -100,6 +117,17 @@ class Functional(Model):
     outcome: Literal["PASS", "FAIL", "INCONCLUSIVE"]
 
 
+class MeasureBatch(Model):
+    study_id: str
+    calibration_id: str
+    values: list[str]=Field(min_length=1,max_length=12)
+    unit: Literal['N_m']='N_m'
+    half_width: str=Field(default='0.02',max_length=40)
+    uncertainty_kind: Literal['ENGINEERING_BOUND','EXPANDED_UNCERTAINTY','UNKNOWN']='ENGINEERING_BOUND'
+    basis: str=Field(default='Assumed error bound for user-chosen fictional readings',min_length=10,max_length=500)
+    occurred_at: str|None=None
+
+
 class Note(Run):
     text: str = Field(min_length=1, max_length=2000)
 
@@ -159,6 +187,7 @@ PAYLOADS = {
     "calibrate": Calibrate,
     "revoke_calibration": Revoke,
     "measure": Measure,
+    "measure_batch": MeasureBatch,
     "functional": Functional,
     "comment": Note,
     "investigate": Investigate,
@@ -312,7 +341,7 @@ def create_app(db_path=None, credentials_path=None):
 
     @app.get("/api/v1/health")
     def health():
-        return {"status": "ok", "schema_version": 1, "mode": "LOCAL_SYNTHETIC", "version": "0.1.0"}
+        return {"status": "ok", "schema_version": 2, "mode": "LOCAL_SYNTHETIC", "version": "0.1.0"}
 
     @app.post("/api/v1/auth/session")
     def login(body: Login):
@@ -347,17 +376,31 @@ def create_app(db_path=None, credentials_path=None):
         return response
 
     @app.get("/api/v1/workspaces")
-    def workspaces(request: Request):
+    def workspaces(request: Request,include_earlier: bool=False):
         actor(request)
         with store.engine.connect() as c:
             return [
                 dict(x)
-                for x in c.execute(text("SELECT * FROM workspaces ORDER BY rowid DESC")).mappings()
+                for x in c.execute(text("SELECT * FROM workspaces WHERE (:all=1 OR purpose='USER_EXPERIMENT') ORDER BY rowid DESC"),{'all':int(include_earlier)}).mappings()
             ]
 
     @app.post("/api/v1/demo/workspaces")
     def create_workspace(body: CreateWorkspace, request: Request):
-        return service.create_workspace(actor(request, True), body.name, body.scenario, body.guided)
+        try:
+            return service.create_workspace(actor(request, True), body.name, body.scenario, body.guided, body.purpose, body.setup.model_dump() if body.setup else None)
+        except ValueError as exc:
+            raise Problem('INVALID_SETUP',str(exc),422)
+
+    @app.post('/api/v1/workspaces/{wid}/organize')
+    def organize(wid:str,body:OrganizeWorkspace,request:Request):
+        user=actor(request,True)
+        if user['role'] not in {'OPERATOR','QUALITY_ENGINEER','ADMIN'}:
+            raise Problem('ROLE_REQUIRED','This account can read experiments but cannot organize them',403)
+        with store.transaction() as c:
+            service._workspace(c,wid)
+            c.execute(text('UPDATE workspaces SET name=:n,purpose=:p WHERE id=:w'),{'w':wid,'n':body.name,'p':body.purpose})
+            service._audit(c,wid,user,'EXPERIMENT_ORGANIZED','COMMITTED',json.dumps(body.model_dump()))
+        return {'workspace_id':wid,**body.model_dump()}
 
     @app.get("/api/v1/workspaces/{wid}/snapshot")
     def snapshot(

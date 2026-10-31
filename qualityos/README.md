@@ -2,13 +2,15 @@
 
 A local, persisted quality evidence and decision prototype. A packaging change makes old qualification inapplicable; the affected run holds until fresh, reliable, independent verification and explicit QA authorization permit bounded simulated continuation.
 
-Four connected workspaces use one backend: Line, Evidence, Qualification and Investigation. The product includes exact and approved-envelope scope, measurement-time reference checks, delayed functional results, investigation/action verification, immutable historical decisions, late correction impact, role restrictions, idempotency and atomic production checks.
+Four tabs use one backend: Production setup, Tests & approval, Investigate a problem, and Decision history. You choose fictional materials, machine setup, readings and independent leak outcomes. The product checks whether those records support a limited continuation; it does not predict a physical seal.
 
 (imp) All supplied observations, suppliers, products and produced units are synthetic. This application does not control equipment, establish package safety, authorize commercial release or demonstrate factory savings.
 
 ## Open the local product
 
-If the service is already running, open [Start here](http://127.0.0.1:8107/start). Choose Start the guided story to follow a fictional cap-delivery change with one explained next action at a time. Saved progress resumes from backend evidence, including after a reload. You can also open an unguided workspace or hide the guide and explore the four operational screens.
+Open [Getting started](http://127.0.0.1:8107/start). The introduction explains a bottled-lotion factory before asking you to choose anything. Choose an approved example, untested caps, or custom fictional inputs. Each experiment is a saved practice session. Each tab explains its steps; test outcomes are your explicit choices, with no prescribed story.
+
+After updating the product, stop the existing server with Ctrl+C in its terminal and start it again. A page refresh alone does not reload Python backend changes or apply the session-category migration. Earlier sessions remain accessible under Getting started; development checks stay out of the normal selector.
 
 Otherwise run:
 
@@ -17,7 +19,7 @@ Set-Location 'C:/ABYUD/HACKATHONS/LOREAL/qualityos'
 .\start.ps1
 ```
 
-Keep that terminal running. Stop its server with Ctrl+C. Start again with the same command to retain workspaces, audit, accounts and history. Do not delete a database to reset a demonstration; use New workspace.
+Keep that terminal running. Stop its server with Ctrl+C. Start again with the same command to retain experiments, audit, accounts and history. Do not delete a database to reset a demonstration; use Create experiment.
 
 On first launch the backend generates random private credentials in `var/local-credentials.json`. Open that file privately on this device and sign in as `qa` for the complete workflow. `operator`, `viewer` and `admin` demonstrate different permissions. ADMIN cannot sign QA authorizations. Passwords are not printed by setup or returned through the API. The display names are fictional demo actors.
 
@@ -47,10 +49,10 @@ The built frontend and API share port 8107. For frontend development, run `npm r
 .\start.ps1 -Mode evaluate
 ```
 
-The first command runs backend checks, frontend tests, TypeScript/build and isolated contract generation. The second persists the independent synthetic comparison in the current store. Open Line → Independent evaluation to run and inspect it through the UI.
+The first command runs backend checks, frontend tests, TypeScript/build and isolated contract generation. The second persists the independent synthetic comparison in the current store. Open Production setup → Independent evaluation to inspect the comparison through the UI.
 
 - [Walkthrough: change, hold, investigate, verify, authorize](docs/WALKTHROUGH.md).
-- [First-visit story, design decisions and executed checks](docs/UX_GUIDED_STORY.md).
+- [Current first-visit experience, user choices and executed checks](docs/UX_EXPERIMENTS.md).
 - [Executed validation, invariant mapping and limitations](docs/VALIDATION.md).
 - [Architecture, API contracts, migrations and recovery](docs/OPERATIONS.md).
 - [Implementation milestones](docs/PLAN.md) and [decision record](docs/DECISIONS.md).

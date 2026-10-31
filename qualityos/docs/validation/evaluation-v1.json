@@ -1,10 +1,10 @@
 {
-  "id": "evaluation-1a356a165d054952aa4232584784453d",
+  "id": "evaluation-529faf1197374639a8429e30fa2fbf4d",
   "status": "COMPLETED",
   "provenance": "SYNTHETIC",
   "corpus_version": "qualityos-independent-v1",
   "corpus_sha256": "63017f94c3fcdf0802eef9fc19d04d74cef39e81788f07edfa55cbfeb7dc503a",
-  "created_at": "2026-10-30T16:03:12.301397+00:00",
+  "created_at": "2026-10-30T19:39:20.160298+00:00",
   "total": 20,
   "passed": 20,
   "cases": [
@@ -228,8 +228,8 @@
     }
   ],
   "latency_ms": {
-    "p50": 0.068,
-    "p95": 0.098,
+    "p50": 0.18,
+    "p95": 0.321,
     "basis": "Pure policy calls on the 20-case corpus; not the separate 10k-event API benchmark"
   },
   "limits": [

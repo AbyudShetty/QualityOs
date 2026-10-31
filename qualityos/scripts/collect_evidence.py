@@ -84,6 +84,24 @@ if (story_output / "story-browser.json").exists():
         ("02-mobile-start", "story-mobile"),
     ]:
         shutil.copyfile(story_output / (source + ".png"), screens / (target + ".png"))
+experiment_output = root / "var/experiment-review"
+if (experiment_output / "browser.json").exists():
+    for source, destination in [("browser.json", "experiments-browser.json"), ("contrast.json", "experiments-contrast.json")]:
+        report = json.loads((experiment_output / source).read_text(encoding="utf-8"))
+        if report.get("failure") or report.get("errors") or any(x.get("failures") for x in report.get("reports", [])):
+            raise RuntimeError("Current experiment UI review contains an unresolved failure")
+        (output / destination).write_text(json.dumps(report, indent=2), encoding="utf-8")
+    for source, destination in [
+        ("01-introduction", "experiment-introduction"),
+        ("02-production-setup", "experiment-setup"),
+        ("03-readings-input", "experiment-readings"),
+        ("04-tests-failed", "experiment-tests-failed"),
+        ("05-investigation", "experiment-investigation"),
+        ("07-decision-history", "experiment-history"),
+        ("390-qualification", "experiment-mobile-tests"),
+    ]:
+        shutil.copyfile(experiment_output / (source + ".png"), screens / (destination + ".png"))
+
 print(
     f"Verified {sum(x['matched'] for x in integrity)} original source hashes; {sum(x.get('status') == 'MISSING_LOCAL_SOURCE' for x in integrity)} source file missing locally. Collected actual evaluation, browser, contrast and screenshots."
 )

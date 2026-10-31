@@ -1,4 +1,26 @@
-# Executed validation and acceptance
+# Current validation: user-controlled experiments
+
+31 October 2026. The previous guided-story UI passed automated checks but failed the user's first-visit comprehension review. It was replaced as the default experience. The retained older reports below do not establish acceptance of the current UI.
+
+| Current check | Actual result | Evidence |
+|---|---|---|
+| Backend domain/API/storage/workflow/migration tests | 67 passed | [checks.json](validation/checks.json), including test_experiments.py |
+| Frontend boundary tests | 3 passed | [checks.json](validation/checks.json) |
+| TypeScript, production build and contracts | Passed | [checks.json](validation/checks.json), docs/contracts |
+| User-controlled real-browser workflow | 16 checks; no captured runtime/console errors | [experiments-browser.json](validation/experiments-browser.json) |
+| Current contrast screen | 0 failures across 761 text elements over five selected page states | [experiments-contrast.json](validation/experiments-contrast.json) |
+| Frozen synthetic outcome corpus | 20/20; regenerated without changing frozen expectations | [evaluation-v1.json](validation/evaluation-v1.json) |
+| User data preservation | Consistent private backup of 11 sessions, 231 events, 462 decisions; unchanged counts confirmed before restart | Private ignored var backup; ADR-015 |
+
+Browser coverage uses actual forms against a separate 8112 backend/database. It exercises explicit FAIL then investigation/fresh verification/PASS, invalid references, varied readings, bounded QA permission, persisted sample units, old decisions, reload, custom setup, covered-cap alternative, session filtering, and all four tabs at 1024 and 390 pixels. Backend tests separately cover direct PASS without investigation, atomic/idempotent multi-reading submission, custom input validation and migration from schema 1 without deleting facts or decisions. No results were set directly to a desired policy decision.
+
+Screenshots: [Introduction](validation/screenshots/experiment-introduction.png), [Reading entry](validation/screenshots/experiment-readings.png), [Mobile tests](validation/screenshots/experiment-mobile-tests.png). These and developer visual inspection do not replace independent novice usability feedback. The contrast scan handles computed solid colors and selected states only; it is not a full accessibility audit.
+
+The running older server on 8107 requires a restart to load the new API and migration. The isolated current build is what was tested. No unfamiliar user process was killed. The backup is private and was not committed. All observations/results remain synthetic; there are no physical trials or measured savings. The existing environment/dependency warning and missing local case PDF limitations below remain applicable.
+
+---
+
+# Retained earlier core and guided-story validation
 
 30 October 2026. This report describes the implemented local synthetic core. Counts describe declared software tests and scenarios, not independent manufacturing trials or an estimated factory failure probability.
 

@@ -1,0 +1,29 @@
+{
+  "provenance": "SYNTHETIC",
+  "database_basis": "Isolated var/ui-checks database; not user application state",
+  "checks": [
+    "First visit explains the factory process, product purpose and user-controlled fictional data",
+    "Normal selector excludes test fixtures; preserved earlier records remain accessible",
+    "Selected cap batch creates an actual paused experiment without generating outcomes",
+    "All four tabs state what to enter, what to do and what it achieves",
+    "User-selected expired reference keeps passing-looking readings unusable",
+    "Different readings are saved individually; valid torque does not invent a leak result",
+    "Elapsed time and independent FAIL are explicitly chosen and persisted",
+    "Problem, explanation, approved change and fresh verification remain separate actions",
+    "Review notes have a specific purpose and editable example; permission stays explicitly bounded",
+    "User chooses sample count and only permitted units are recorded",
+    "History explains entered data and preserves an earlier failed decision",
+    "Saved experiment and outcomes survive reload",
+    "All four tabs fit 1024 px without document overflow",
+    "All four tabs fit 390 px without document overflow",
+    "Custom batch identity and machine setting are user-chosen and do not inherit old proof",
+    "A different cap batch can remain covered; new does not automatically mean bad"
+  ],
+  "errors": [],
+  "experiments": [
+    "workspace-ad20ad223c49",
+    "workspace-edf6a615dfcc"
+  ],
+  "completed_at": "2026-10-30T19:37:12.902Z",
+  "base_url": "http://127.0.0.1:8112"
+}

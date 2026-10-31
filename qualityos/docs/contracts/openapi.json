@@ -92,12 +92,34 @@
       "get": {
         "summary": "Workspaces",
         "operationId": "workspaces_api_v1_workspaces_get",
+        "parameters": [
+          {
+            "name": "include_earlier",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Earlier"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -117,6 +139,53 @@
             }
           },
           "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/workspaces/{wid}/organize": {
+      "post": {
+        "summary": "Organize",
+        "operationId": "organize_api_v1_workspaces__wid__organize_post",
+        "parameters": [
+          {
+            "name": "wid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Wid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizeWorkspace"
+              }
+            }
+          }
         },
         "responses": {
           "200": {
@@ -486,11 +555,92 @@
             "type": "boolean",
             "title": "Guided",
             "default": false
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "USER_EXPERIMENT",
+              "AUTOMATION_TEST"
+            ],
+            "title": "Purpose",
+            "default": "USER_EXPERIMENT"
+          },
+          "setup": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExperimentSetup"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
         "type": "object",
         "title": "CreateWorkspace"
+      },
+      "ExperimentSetup": {
+        "properties": {
+          "bottle": {
+            "type": "string",
+            "enum": [
+              "ORIGINAL",
+              "OTHER",
+              "CUSTOM"
+            ],
+            "title": "Bottle",
+            "default": "ORIGINAL"
+          },
+          "cap": {
+            "type": "string",
+            "enum": [
+              "ORIGINAL",
+              "UNTESTED",
+              "COVERED",
+              "CUSTOM"
+            ],
+            "title": "Cap",
+            "default": "ORIGINAL"
+          },
+          "machine": {
+            "type": "string",
+            "enum": [
+              "BASELINE",
+              "ALTERNATE",
+              "CUSTOM"
+            ],
+            "title": "Machine",
+            "default": "BASELINE"
+          },
+          "bottle_name": {
+            "type": "string",
+            "maxLength": 80,
+            "title": "Bottle Name",
+            "default": ""
+          },
+          "cap_name": {
+            "type": "string",
+            "maxLength": 80,
+            "title": "Cap Name",
+            "default": ""
+          },
+          "machine_name": {
+            "type": "string",
+            "maxLength": 80,
+            "title": "Machine Name",
+            "default": ""
+          },
+          "machine_torque": {
+            "type": "string",
+            "maxLength": 40,
+            "title": "Machine Torque",
+            "default": "1.00"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ExperimentSetup"
       },
       "HTTPValidationError": {
         "properties": {
@@ -527,6 +677,31 @@
           "password"
         ],
         "title": "Login"
+      },
+      "OrganizeWorkspace": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "USER_EXPERIMENT",
+              "LEGACY_SESSION"
+            ],
+            "title": "Purpose"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "purpose"
+        ],
+        "title": "OrganizeWorkspace"
       },
       "ValidationError": {
         "properties": {

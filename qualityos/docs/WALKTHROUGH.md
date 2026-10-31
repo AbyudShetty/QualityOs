@@ -1,4 +1,35 @@
-# QualityOS product walkthrough
+# QualityOS: current first-visit walkthrough
+
+31 October 2026. This section supersedes the older button names and guided-story instructions retained below. All data and sample units are fictional. Sign in as qa using the privately generated local credentials.
+
+Start at http://127.0.0.1:8107/start after restarting the backend following this update. Read the bottle-filling, cap-fitting, testing and review explanation. Choose Try untested caps, name the experiment, review the chosen materials and machine, then save. This does not physically model cap performance: earlier tests simply do not cover the chosen cap batch.
+
+## A short experiment you control
+
+1. Production setup shows what was chosen and which checks are missing. No sample production is authorized yet. Change inputs deliberately if you want to compare a different setup.
+2. In Tests & approval choose Start a test set, then Enter torque readings. Enter 0.98, 1.00, 1.02 for three fictional specimens. Keep the eligible reference, or deliberately choose an expired reference to observe why apparently good numbers cannot be used.
+3. Advance time by the displayed 24 demonstration hours, then Confirm current records. The software has not physically waited or performed a test.
+4. Choose leak-test result and explicitly select your fictional outcome. PASS can satisfy the example test requirements; FAIL establishes a failed independent test; INCONCLUSIVE leaves uncertainty. Torque alone does not select the outcome.
+5. For PASS, resolve the recorded pause with a meaningful note, then separately Approve sample production with a unit/time limit. The editable note example explains what the review records. In Production setup choose Record sample units and enter a count within permission.
+6. For FAIL, use Investigate a problem: describe the failure, add possible explanations and evidence, plan a machine setup change, approve/apply it, and start a new verification set. Return to Tests & approval for fresh readings and an explicitly chosen result; then review the verification in Investigation. No old failure is erased. Only a complete passing verification can support the later QA steps.
+7. Decision history shows chosen values, results and decisions. Select an earlier decision to see what was known then; Return to current restores the live view. Export experiment saves the workspace evidence/history, not passwords.
+
+## What the four tabs mean
+
+| Tab | Your job |
+|---|---|
+| Production setup | Choose the materials/setup, understand readiness, and record sample production only after explicit permission. |
+| Tests & approval | Supply test evidence, understand why it can or cannot be used, then review limited continuation. |
+| Investigate a problem | Explain a failed result, compare possibilities, review a change, and verify it with new tests. You need not invent a problem for an already passing setup. |
+| Decision history | Inspect the saved choices and reasoning, including earlier outcomes. |
+
+Getting started also offers an approved example and custom fictional inputs. These are alternatives, not a forced script. Earlier sessions, including development checks, are preserved in a separate section and can be kept in the normal experiment list. No particular physical outcome, factory benefit or customer validation is claimed.
+
+---
+
+The following records the earlier core workflow and advanced checks. Its previous labels and prescribed story are historical; use the current UI labels and instructions above.
+
+# Earlier core walkthrough
 
 Use `qa` with the privately generated local password. Every action below produces real persisted synthetic state; no factory observation is implied. Create a new workspace for each clean presentation. This is a walkthrough script, not a recorded or timed three-minute claim.
 

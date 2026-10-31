@@ -16,7 +16,7 @@ flowchart LR
   Guard --> Units[Synthetic unit records]
 ```
 
-The ordered migration list in `backend/qualityos/store.py` creates schema version 1 in a serialized transaction. Startup reruns migration inspection safely; a newer schema is refused rather than downgraded. SQLite enables foreign keys, WAL and a five-second busy timeout. Append-only triggers protect events, decisions and audit. JSON entity projections are rebuilt semantically from event changes; record hashes detect accidental mismatches, not hostile administrator changes.
+The ordered migration list in `backend/qualityos/store.py` creates schema version 1 and applies additive session-metadata migration 2 in serialized transactions. Startup reruns migration inspection safely; a newer schema is refused rather than downgraded. SQLite enables foreign keys, WAL and a five-second busy timeout. Append-only triggers protect events, decisions and audit. JSON entity projections are rebuilt semantically from event changes; record hashes detect accidental mismatches, not hostile administrator changes.
 
 No destructive migration, reset or cleanup command is provided. Before a future schema change, stop the server and copy the complete `var` directory to a new private backup location; preserve matching database/WAL state. A live main-file-only SQLite copy is not a safe general backup. Do not commit private backups.
 
@@ -85,3 +85,22 @@ Exports preserve one domain cut plus all matching event/decision records, a sema
 - No real operator study, physical metrology validation, factory connector, plant pilot, human-time saving, defect/waste reduction, commercial-system comparison or competition eligibility verification has occurred.
 - Fresh online dependency installation is blocked here. The tested local fallback and exact lockfiles are documented; full package isolation requires a normal network-enabled setup.
 - Original research, failed evidence and runtime histories are retained. Optional adapters and public deployment require separate scoped work.
+
+
+## User-controlled experiments and isolated UI verification
+
+Relational schema version 2 adds workspaces.purpose and created_by. Existing facts, decisions, audit and sessions are preserved; legacy records and known development checks are excluded from the ordinary list. GET /api/v1/workspaces?include_earlier=true exposes retained earlier sessions. POST /workspaces/{id}/organize changes only audited display/category metadata, with role and CSRF checks, leaving the quality revision and semantic fingerprint unchanged. This command cannot delete records or grant QA permission. Health reports relational version 2; domain export version 1 remains a separate contract.
+
+CreateWorkspace.setup supports ORIGINAL/OTHER/CUSTOM bottles, ORIGINAL/UNTESTED/COVERED/CUSTOM caps, BASELINE/ALTERNATE/CUSTOM machine setup, custom names, and a finite positive custom torque setting. Custom identities cannot inherit proof from the original seed. These are fictional configurations, with no physical model. measure_batch records 1-12 distinct specimen observations in one guarded transaction and idempotent receipt. All values validate before changes commit. No operation invents an independent functional outcome.
+
+After updating, restart the backend; refreshing the SPA alone cannot load Python changes. For this update a consistent read-only SQLite backup was made before the migration. Historical domain records are not rewritten. Legacy guided creation/API remains compatible, but the current UI creates user experiments without a guide.
+
+Browser acceptance must not seed the real user database. Run the isolated review server in one terminal:
+
+```powershell
+Set-Location 'C:/ABYUD/HACKATHONS/LOREAL/qualityos'
+$env:PYTHONPATH=Join-Path (Get-Location) 'backend'
+.\.venv\Scripts\python.exe scripts/serve_review.py
+```
+
+It binds localhost 8112 and stores private data in a new var/ui-checks directory. With a dedicated product-local QA browser profile and CDP port 9239 running, run node scripts/experiment-browser-check.mjs then node scripts/experiment-contrast-check.mjs from web. The workflow refuses a session manifest pointing to the real application store. Reports/screenshots land in ignored var/experiment-review; scripts/collect_evidence.py publishes reviewed credential-free copies. Older browser scripts target the historical UI and are retained as historical artifacts; do not run them against the user's store.

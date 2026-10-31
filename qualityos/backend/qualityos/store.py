@@ -36,7 +36,13 @@ MIGRATIONS = [
             "CREATE TRIGGER audit_no_update BEFORE UPDATE ON audit BEGIN SELECT RAISE(ABORT,'audit is append-only'); END",
             "CREATE TRIGGER audit_no_delete BEFORE DELETE ON audit BEGIN SELECT RAISE(ABORT,'audit is append-only'); END",
         ],
-    )
+    ),
+    (2, [
+        "ALTER TABLE workspaces ADD COLUMN purpose TEXT NOT NULL DEFAULT 'LEGACY_SESSION' CHECK(purpose IN ('USER_EXPERIMENT','AUTOMATION_TEST','LEGACY_SESSION'))",
+        "ALTER TABLE workspaces ADD COLUMN created_by TEXT REFERENCES actors(id)",
+        "UPDATE workspaces SET purpose='AUTOMATION_TEST' WHERE lower(name) LIKE 'browser verification%' OR lower(name) LIKE 'browser qa%'",
+        "CREATE INDEX workspaces_purpose ON workspaces(purpose)",
+    ])
 ]
 
 

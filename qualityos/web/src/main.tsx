@@ -4,5 +4,6 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/jetbrains-mono';
 import './styles.css';
 import './story.css';
+import './experiments.css';
 import App from './App';
 createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);

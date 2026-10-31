@@ -34,6 +34,7 @@ OPERATIONS = QA | {
     "change_context",
     "open_study",
     "measure",
+    "measure_batch",
     "functional",
     "advance",
     "refresh_source",
@@ -80,13 +81,18 @@ class Service:
             },
         )
 
-    def create_workspace(self, actor, name="Packaging qualification", scenario="S1", guided=False):
+    def create_workspace(self, actor, name="Packaging qualification", scenario="S1", guided=False, purpose='USER_EXPERIMENT', setup=None):
         if actor["role"] not in {"OPERATOR", "QUALITY_ENGINEER", "ADMIN"}:
             raise Problem(
                 "ROLE_REQUIRED", "A demo operator or administrator must create a workspace", 403
             )
         wid = uid("workspace")
         records = seed_records(wid[-6:] + "-")
+        if purpose not in {'USER_EXPERIMENT','AUTOMATION_TEST'}:
+            raise Problem('INVALID_PURPOSE','Unsupported experiment category',422)
+        if setup:
+            if guided: raise Problem('SETUP_CONFLICT','Choose custom inputs without the legacy guided sequence',422)
+            self._configure_experiment(records,setup)
         if guided:
             if scenario != "S1":
                 raise Problem(
@@ -115,12 +121,14 @@ class Service:
             }
         with self.store.transaction() as c:
             c.execute(
-                text("INSERT INTO workspaces VALUES (:w,:n,:clock,'SYNTHETIC_DEMO',0,0,:v)"),
+                text("INSERT INTO workspaces(id,name,clock,mode,revision,cursor,scenario_version,purpose,created_by) VALUES (:w,:n,:clock,'SYNTHETIC_DEMO',0,0,:v,:purpose,:actor)"),
                 {
                     "w": wid,
                     "n": name,
                     "clock": START,
                     "v": "packpair-v1/" + scenario + ("/guided-story-v1" if guided else ""),
+                    'purpose':purpose,
+                    'actor':actor['id'],
                 },
             )
             ws = self._workspace(c, wid)
@@ -133,9 +141,31 @@ class Service:
                 "WORKSPACE_CREATED",
                 uid("seed"),
                 "local-scenario",
-                {"scenario": scenario, "guided": guided},
+                {"scenario": scenario, "guided": guided, 'setup':setup, 'purpose':purpose},
             )
         return {"workspace_id": wid, **response}
+
+    @staticmethod
+    def _configure_experiment(records,setup):
+        def named(suffix): return next(x for x in records.values() if x['id'].endswith(suffix))
+        run=named('run-1')
+        def custom(kind,label,**data):
+            if len(label.strip())<2: raise ValueError('Give each custom input a name of at least two characters')
+            key=uid(kind)
+            records[key]={'id':key,'kind':kind,'label':label.strip(),'provenance':'SYNTHETIC','created_at':START,'available_at':START,**data}
+            return key
+        bottle=setup.get('bottle','ORIGINAL');cap=setup.get('cap','ORIGINAL');machine=setup.get('machine','BASELINE')
+        if bottle=='CUSTOM':
+            run['bottle_lot_id']=custom('lot',setup.get('bottle_name',''),component='BOTTLE',supplier='User-defined fictional supplier',composition='Unknown',specification='User-specified demonstration batch')
+        else:run['bottle_lot_id']=named('bottle-b01' if bottle=='ORIGINAL' else 'bottle-b02')['id']
+        if cap=='CUSTOM':
+            run['closure_lot_id']=custom('lot',setup.get('cap_name',''),component='CLOSURE',supplier='User-defined fictional supplier',composition='Unknown',specification='User-specified demonstration batch')
+        else:run['closure_lot_id']=named({'ORIGINAL':'closure-c01','UNTESTED':'closure-c02','COVERED':'closure-c03'}[cap])['id']
+        if machine=='CUSTOM':
+            setting=number(setup.get('machine_torque','1.00'))
+            if not 0<setting<=1000:raise ValueError('The fictional machine setting must be greater than 0 and at most 1000 N·m')
+            run['config_id']=custom('config',setup.get('machine_name',''),revision=1,torque_setting=str(setting),unit='N_m')
+        else:run['config_id']=named('capper-v1' if machine=='BASELINE' else 'capper-v2')['id']
 
     def _commit(self, c, ws, before, records, actor, operation, key, source, detail):
         now = ws["clock"]
@@ -392,6 +422,12 @@ class Service:
 
     def _apply(self, op, p, r, ws, actor, reason):
         now = ws["clock"]
+        if op=='measure_batch':
+            for value in p['values']: number(value)
+            base={k:v for k,v in p.items() if k!='values'}
+            for value in p['values']:
+                self._apply('measure',{**base,'value':value,'count':1},r,ws,actor,reason)
+            return
 
         def get(key, kind=None):
             item = r.get(key)
@@ -627,7 +663,7 @@ class Service:
                 action["status"] = "VERIFYING"
             add(
                 "study",
-                label="Qualification · "
+                label="Test set · "
                 + get(run["closure_lot_id"])["label"]
                 + " / "
                 + get(run["config_id"])["label"],
@@ -923,11 +959,13 @@ class Service:
                 dict(x)
                 for x in c.execute(
                     text(
-                        "SELECT seq,id,type,occurred_at,available_at,recorded_at,received_at_system_utc,actor_id FROM events WHERE workspace_id=:w AND seq<=:cut ORDER BY seq DESC LIMIT 100"
+                        "SELECT seq,id,type,occurred_at,available_at,recorded_at,received_at_system_utc,actor_id,payload FROM events WHERE workspace_id=:w AND seq<=:cut ORDER BY seq DESC LIMIT 100"
                     ),
                     {"w": wid, "cut": past["cursor"] if decision_id else ws["cursor"]},
                 ).mappings()
             ]
+            for event in events:
+                event['detail']=json.loads(event.pop('payload')).get('detail',{})
             decisions = [
                 {
                     "id": x.id,
@@ -1061,6 +1099,12 @@ class Service:
                 result["impact"],
                 historical=bool(decision_id),
             )
+            result['test_sets']=[]
+            for study_id in decision['study_ids']:
+                observations=[x for x in records.values() if x['kind']=='measurement' and x.get('study_id')==study_id and instant(x['available_at'])<=instant(result['clock'])]
+                tests=[x for x in records.values() if x['kind']=='functional' and x.get('study_id')==study_id and instant(x['available_at'])<=instant(result['clock'])]
+                remaining=max(0,24-(instant(result['clock'])-max(instant(x['occurred_at']) for x in observations)).total_seconds()/3600) if observations else None
+                result['test_sets'].append({'study_id':study_id,'specimens':len({x['sample_id'] for x in observations}),'wait_hours_remaining':remaining,'has_results':bool(tests)})
             return result
 
     def audit_read(self, wid, actor, action, detail):

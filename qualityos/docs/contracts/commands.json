@@ -218,6 +218,79 @@
     "title": "Measure",
     "type": "object"
   },
+  "measure_batch": {
+    "additionalProperties": false,
+    "properties": {
+      "study_id": {
+        "title": "Study Id",
+        "type": "string"
+      },
+      "calibration_id": {
+        "title": "Calibration Id",
+        "type": "string"
+      },
+      "values": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 12,
+        "minItems": 1,
+        "title": "Values",
+        "type": "array"
+      },
+      "unit": {
+        "const": "N_m",
+        "default": "N_m",
+        "enum": [
+          "N_m"
+        ],
+        "title": "Unit",
+        "type": "string"
+      },
+      "half_width": {
+        "default": "0.02",
+        "maxLength": 40,
+        "title": "Half Width",
+        "type": "string"
+      },
+      "uncertainty_kind": {
+        "default": "ENGINEERING_BOUND",
+        "enum": [
+          "ENGINEERING_BOUND",
+          "EXPANDED_UNCERTAINTY",
+          "UNKNOWN"
+        ],
+        "title": "Uncertainty Kind",
+        "type": "string"
+      },
+      "basis": {
+        "default": "Assumed error bound for user-chosen fictional readings",
+        "maxLength": 500,
+        "minLength": 10,
+        "title": "Basis",
+        "type": "string"
+      },
+      "occurred_at": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Occurred At"
+      }
+    },
+    "required": [
+      "study_id",
+      "calibration_id",
+      "values"
+    ],
+    "title": "MeasureBatch",
+    "type": "object"
+  },
   "functional": {
     "additionalProperties": false,
     "properties": {

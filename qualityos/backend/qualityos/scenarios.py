@@ -44,7 +44,7 @@ def seed_records(prefix: str = "") -> dict:
     bottle = add(
         "bottle-b01",
         "lot",
-        label="B01 · Bottle",
+        label="B01 · Original bottle batch",
         component="BOTTLE",
         supplier="Fictional Meridian Packaging",
         specification="28/410 demo family",
@@ -53,7 +53,7 @@ def seed_records(prefix: str = "") -> dict:
     closure = add(
         "closure-c01",
         "lot",
-        label="C01 · Closure",
+        label="C01 · Original cap batch",
         component="CLOSURE",
         supplier="Fictional Linden Components",
         specification="28/410 demo family",
@@ -62,7 +62,7 @@ def seed_records(prefix: str = "") -> dict:
     add(
         "closure-c02",
         "lot",
-        label="C02 · New closure lot",
+        label="C02 · Untested cap batch",
         component="CLOSURE",
         supplier="Fictional Linden Components",
         specification="28/410 demo family",
@@ -71,7 +71,7 @@ def seed_records(prefix: str = "") -> dict:
     covered = add(
         "closure-c03",
         "lot",
-        label="C03 · Envelope-covered lot",
+        label="C03 · Cap batch covered by earlier tests",
         component="CLOSURE",
         supplier="Fictional Linden Components",
         specification="28/410 demo family",
@@ -80,7 +80,7 @@ def seed_records(prefix: str = "") -> dict:
     config = add(
         "capper-v1",
         "config",
-        label="Capper · configuration v1",
+        label="Machine setup v1 · Original",
         revision=1,
         torque_setting="1.00",
         unit="N_m",
@@ -88,7 +88,7 @@ def seed_records(prefix: str = "") -> dict:
     add(
         "capper-v2",
         "config",
-        label="Capper · configuration v2",
+        label="Machine setup v2 · Alternate",
         revision=2,
         torque_setting="1.04",
         unit="N_m",
@@ -122,7 +122,7 @@ def seed_records(prefix: str = "") -> dict:
     add(
         "calibration-02-old",
         "calibration",
-        label="T-02 · expired reference",
+        label="T-02 · Expired reference (ineligible for new readings)",
         instrument_id=prefix + "torque-02",
         valid_from="2025-01-01T00:00:00+00:00",
         valid_until="2026-01-01T00:00:00+00:00",
@@ -201,7 +201,7 @@ def seed_records(prefix: str = "") -> dict:
         study = add(
             f"study-initial-{n}",
             "study",
-            label=f"Initial qualification · line {n}",
+            label=f"Earlier example tests · run {n}",
             run_id=run,
             scope=scope,
             approved_envelope={"closure_lot_id": [covered]},
