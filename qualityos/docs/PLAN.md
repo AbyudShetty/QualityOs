@@ -1,5 +1,7 @@
 # Controlled implementation plan
 
+Current review remediation, 2 November 2026: [time-bounded frozen rules and priorities](REVIEW_REMEDIATION_2026-11-02.md), [implementation handoff](REVIEW_HANDOFF_2026-11-02.md), [current demonstration](DEMO_2026-11-02.md). This corrects the demonstrated prior defects; historical milestone labels below are not independent certification. No optional module or architecture expansion was undertaken.
+
 Prepared 30 October 2026; implementation subsequently authorized by the user. Product root is `C:/ABYUD/HACKATHONS/LOREAL/qualityos`; repository root is its parent. The user runs all Git commands. The original milestone plan below is retained; executed results and scope limits are in [VALIDATION.md](VALIDATION.md).
 
 ## Goal and canonical contracts

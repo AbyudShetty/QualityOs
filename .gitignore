@@ -42,11 +42,15 @@ tmp/
 .DS_Store
 Thumbs.db
 
-# local folders
+# Local folders and files for qualityos handoff, reassessment, research and independent review
 qualityos_handoff_2026-10-30_01/
 reassessment_2026-10-30_01/
 research_2026-10-30/
+qualityos_independent_review/
+visual_guide.pdf
 
+# repomix
+repomix-output.md
 
 # Keep source research, small reviewed validation reports and dependency
 # lockfiles versioned. Do not ignore PDFs, CSVs, JSON or docs globally.

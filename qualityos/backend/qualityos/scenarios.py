@@ -64,7 +64,7 @@ def seed_records(prefix: str = "") -> dict:
         "lot",
         label="C02 · Untested cap batch",
         component="CLOSURE",
-        supplier="Fictional Linden Components",
+        supplier="Fictional Cedar Closures",
         specification="28/410 demo family",
         composition="Unknown; no material-inferiority inference",
     )
@@ -205,6 +205,8 @@ def seed_records(prefix: str = "") -> dict:
             run_id=run,
             scope=scope,
             approved_envelope={"closure_lot_id": [covered]},
+            approved_joint_scopes=[{**scope, "closure_lot_id": covered}],
+            envelope_approval={"approved_by": "FICTIONAL_QUALIFICATION_OWNER", "basis": "Declared synthetic C03 alternative; all other dimensions fixed", "approved_at": PAST},
             condition_start=PAST,
             created_at=PAST,
         )

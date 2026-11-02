@@ -7,7 +7,7 @@ from uuid import uuid4
 
 from sqlalchemy import text
 
-from .domain import canonical, digest, evaluate, instant, number, reliability, scope_of
+from .domain import applicable, canonical, digest, evaluate, instant, number, reliability, scope_of
 from .scenarios import START, seed_records
 from .security import utcnow
 
@@ -22,6 +22,8 @@ def uid(kind):
 
 
 QA = {
+    "correct_evidence",
+    "disposition_study",
     "calibrate",
     "revoke_calibration",
     "resolve_hold",
@@ -52,6 +54,61 @@ OPERATIONS = QA | {
 class Service:
     def __init__(self, store):
         self.store = store
+
+    @staticmethod
+    def _recovery_blockers(run, records):
+        blockers=[]
+        for a in records.values():
+            if a.get('kind')!='action' or a.get('run_id')!=run['id'] or not a.get('required_for_release',True) or a.get('status') not in {'APPROVED','EXECUTED','VERIFYING'}:
+                continue
+            incident=records.get(a.get('investigation_id'),{})
+            scope=a.get('execution_scope') or a.get('scope') or incident.get('scope',{})
+            if a.get('status') in {'EXECUTED','VERIFYING'}:
+                scope={**scope,'config_id':a.get('config_id')}
+            if scope==scope_of(run):blockers.append(a)
+        return blockers
+
+    @classmethod
+    def _evaluate(cls, run, records, now):
+        ev=evaluate(run,records,now)
+        blockers=cls._recovery_blockers(run,records)
+        if blockers:
+            ev['requirements'].append({'type':'REQUIRED_ACTION_VERIFICATION','verdict':'UNKNOWN',
+                'reason':'A QA-approved required recovery action still needs independently complete fresh verification and QA assessment',
+                'evidence_refs':[a['id'] for a in blockers], 'next_action':'Complete and review the required post-action verification'})
+            ev['evidence_refs']=sorted(set(ev['evidence_refs'])|{a['id'] for a in blockers})
+            if ev['recommendation']=='ACCEPT':ev['recommendation']='HOLD'
+        return ev
+
+    @staticmethod
+    def _affected(records, now):
+        bad={m['id'] for m in records.values() if m['kind']=='measurement' and reliability(m,records,now)['verdict']!='VALID'}
+        superseded={x['supersedes_id'] for x in records.values() if x['kind']=='correction'}
+        units=[u for u in records.values() if u['kind']=='unit']
+        conservative=any(x['kind']=='run' and x.get('lineage')!='COMPLETE' for x in records.values()) and bool(bad or superseded)
+        return (units if conservative else [u for u in units if set(u['evidence_ids']) & (bad|superseded)]),conservative
+
+    @staticmethod
+    def _impact_cause(unit, records, now, conservative):
+        # Bind handling to the actual discovery chain. A second discovery must
+        # not inherit a disposition of an earlier, different evidence cut.
+        support=set(unit['evidence_ids'])
+        causes=set()
+        if conservative:
+            causes.update(x['id'] for x in records.values() if x['kind'] in {'revocation','correction'})
+        for key in list(support):
+            m=records.get(key,{})
+            if m.get('kind')=='measurement' and reliability(m,records,now)['verdict']!='VALID':
+                causes.add(key)
+                for rev in records.values():
+                    if rev['kind']=='revocation' and rev.get('calibration_id')==m.get('calibration_id') and instant(rev['effective_from'])<=instant(m['occurred_at'])<=instant(rev['effective_until']):causes.add(rev['id'])
+        changed=True
+        while changed:
+            changed=False
+            for correction in records.values():
+                if correction['kind']=='correction' and correction.get('supersedes_id') in support and correction['id'] not in causes:
+                    causes.add(correction['id']);support.add(correction['replacement_id']);changed=True
+        return digest(sorted(causes))
 
     @staticmethod
     def can(actor, operation):
@@ -171,7 +228,7 @@ class Service:
         now = ws["clock"]
         evaluations = {}
         for run in [r for r in records.values() if r["kind"] == "run"]:
-            ev = evaluate(run, records, now)
+            ev = self._evaluate(run, records, now)
             evaluations[run["id"]] = ev
             active_holds = [
                 h
@@ -226,6 +283,17 @@ class Service:
                 )
             ev["id"] = uid("decision")
             run["current_decision_id"] = ev["id"]
+        affected,conservative=self._affected(records,now)
+        covered={(i,h.get('trigger_by_unit',{}).get(i)) for h in records.values() if h['kind']=='containment' for i in h['unit_ids']}
+        causes={u['id']:self._impact_cause(u,records,now,conservative) for u in affected}
+        new_units=[u['id'] for u in affected if (u['id'],causes[u['id']]) not in covered]
+        if new_units:
+            hid=uid('containment')
+            records[hid]={'id':hid,'kind':'containment','unit_ids':new_units,'status':'ACTIVE',
+                'trigger_by_unit':{i:causes[i] for i in new_units},
+                'certainty':'CONSERVATIVE' if conservative else 'EXACT',
+                'reason':'Later evidence requires QA review of these historical units; independent current scope is evaluated separately',
+                'created_at':now,'available_at':now,'provenance':'SYNTHETIC'}
         changes = {
             i: r
             for i, r in records.items()
@@ -454,9 +522,11 @@ class Service:
             return r[key]
 
         def decision(run):
-            return evaluate(run, r, now)
+            return self._evaluate(run, r, now)
 
         def check_qa_snapshot(run):
+            if self._recovery_blockers(run,r):
+                raise Problem('REQUIRED_VERIFICATION_PENDING','QA-required recovery verification must be complete and assessed before resolving a pause or authorizing production')
             ev = decision(run)
             if (
                 p.get("decision_id") != run.get("current_decision_id")
@@ -531,6 +601,9 @@ class Service:
                 status="PROPOSED",
                 rationale=reason,
                 verification_plan=p["verification_plan"],
+                required_for_release=p.get('required_for_release',True),
+                scope=incident['scope'],
+                hold_ids=[h['id'] for h in r.values() if h['kind']=='hold' and h['run_id']==incident['run_id'] and h['status']=='ACTIVE'],
             )
             return
         if op in {"approve_action", "execute_action", "assess_action"}:
@@ -549,13 +622,14 @@ class Service:
                 run.update(
                     config_id=action["config_id"], context_revision=run["context_revision"] + 1
                 )
+                action['execution_scope']=scope_of(run)
             else:
                 if action["status"] not in {"EXECUTED", "VERIFYING"}:
                     raise Problem(
                         "INVALID_TRANSITION",
                         "Execute the action and collect new verification first",
                     )
-                ev = decision(run)
+                ev = evaluate(run,r,now)
                 fresh = [
                     s
                     for s in r.values()
@@ -570,18 +644,15 @@ class Service:
                     for key, item in r.items()
                     if item["kind"] != "study" or key in fresh_ids
                 }
-                if (
-                    ev["recommendation"] != "ACCEPT"
-                    or not fresh
-                    or evaluate(run, fresh_records, now)["recommendation"] != "ACCEPT"
-                ):
+                fresh_ev=evaluate(run,fresh_records,now)
+                if not fresh or fresh_ev['recommendation']!='ACCEPT':
                     raise Problem(
                         "NEW_VERIFICATION_REQUIRED",
                         "A complete independently sufficient post-action qualification is required; old proof cannot fill its gaps",
                     )
                 proof = [
                     r[i]
-                    for i in ev["evidence_refs"]
+                    for i in fresh_ev["evidence_refs"]
                     if i in r and r[i].get("study_id") in {s["id"] for s in fresh}
                 ]
                 if not any(x["kind"] == "functional" for x in proof) or not any(
@@ -598,6 +669,7 @@ class Service:
                     assessed_at=now,
                     reviewed_by=actor["id"],
                     new_evidence_ids=[x["id"] for x in proof],
+                    verified_study_ids=sorted(fresh_ids),
                 )
                 add(
                     "effectiveness",
@@ -608,6 +680,20 @@ class Service:
                     comparison="Prior rejected configuration versus new scoped verification; no physical causal claim",
                     reviewed_by=actor["id"],
                 )
+            return
+        if op == 'disposition_study':
+            old=get(p['study_id'],'study');new=get(p['verification_study_id'],'study');a=get(p['action_id'],'action')
+            run=get(old['run_id'],'run')
+            if old['id']==new['id'] or new.get('action_id')!=a['id'] or a.get('status')!='VERIFIED' or new['id'] not in a.get('verified_study_ids',[]) or new.get('scope')!=scope_of(run) or a.get('execution_scope')!=scope_of(run) or not applicable(old,run):
+                raise Problem('DISPOSITION_SCOPE_MISMATCH','A separate passing verification from the reviewed action must cover this exact current condition')
+            only={k:v for k,v in r.items() if v['kind']!='study' or k==new['id']}
+            if evaluate(run,only,now)['recommendation']!='ACCEPT':
+                raise Problem('NEW_VERIFICATION_REQUIRED','The named verification must independently meet every evidence requirement')
+            if any(d['kind']=='study_disposition' and d.get('study_id')==old['id'] and d.get('scope')==scope_of(run) for d in r.values()):
+                raise Problem('ALREADY_DISPOSITIONED','This study already has a determination for the current condition')
+            add('study_disposition',label='QA determination of prior study',study_id=old['id'],verification_study_id=new['id'],action_id=a['id'],
+                scope=scope_of(run),reason=reason,qa_actor=actor['id'],
+                failed_observation_ids=[f['id'] for f in r.values() if f['kind']=='functional' and f.get('study_id')==old['id'] and f.get('outcome')=='FAIL'])
             return
         if op == "disposition":
             for unit_id in p["unit_ids"]:
@@ -621,6 +707,11 @@ class Service:
                     reason=reason,
                     qa_actor=actor["id"],
                 )
+                for h in r.values():
+                    if h['kind']=='containment' and unit_id in h['unit_ids']:
+                        h.setdefault('reviewed_units',{})[unit_id]={'disposition':p['disposition'],'qa_actor':actor['id'],'at':now}
+                        if all(i in h['reviewed_units'] for i in h['unit_ids']):
+                            h['status']='HELD' if any(d['disposition']=='HELD' for d in h['reviewed_units'].values()) else 'DISPOSITIONED'
             return
         run = get(p["run_id"], "run") if "run_id" in p else None
         if op == "change_context":
@@ -672,6 +763,8 @@ class Service:
                 approved_envelope={},
                 condition_start=now,
                 action_id=action_id,
+                purpose=p.get('purpose','REQUIRED'),
+                sequence=1+sum(s['kind']=='study' and s.get('run_id')==run['id'] for s in r.values()),
             )
         elif op == "investigate":
             add(
@@ -809,7 +902,7 @@ class Service:
                 for index in range(p["count"]):
                     specimen = add(
                         "specimen",
-                        label="Fresh synthetic specimen",
+                        label="Fictional specimen " + str(1 + sum(x["kind"]=="specimen" and x.get("study_id")==study["id"] for x in r.values())),
                         study_id=study["id"],
                         fresh_or_reused="FRESH",
                         preparation_group=study["id"],
@@ -881,6 +974,7 @@ class Service:
                         occurred_at=now,
                         attestor=actor["id"],
                         note=reason,
+                        input_basis=p.get('input_basis','SYNTHETIC_ALL_SPECIMENS_SAME_OUTCOME'),
                     )
         elif op == "correct_evidence":
             old = get(p["evidence_id"])
@@ -909,9 +1003,14 @@ class Service:
                 **{
                     k: v
                     for k, v in old.items()
-                    if k not in {"id", "kind", "available_at", "created_at", "provenance"}
+                    if k not in {"id", "kind", "available_at", "created_at", "provenance", "recorded_revision", "supersedes_id", "attestor", "original_attestor", "corrected_by", "note", "correction_basis"}
                 },
                 supersedes_id=old["id"],
+                original_attestor=old.get('original_attestor',old.get('attestor')),
+                attestor=actor['id'],
+                corrected_by=actor['id'],
+                correction_basis=p.get('correction_basis','RECORDING_ERROR'),
+                note=reason,
             )
             replacement["outcome"] = p["outcome"]
             add(
@@ -950,7 +1049,7 @@ class Service:
                 past["decision"]
                 if decision_id
                 else {
-                    **evaluate(run, records, ws["clock"]),
+                    **self._evaluate(run, records, ws["clock"]),
                     "id": did,
                     "known_through_seq": ws["cursor"],
                 }
@@ -989,21 +1088,7 @@ class Service:
                     {"w": wid, "cut": past["cursor"] if decision_id else ws["cursor"]},
                 ).mappings()
             ]
-            revocations = [x for x in records.values() if x["kind"] == "revocation"]
-            bad_m = {
-                m["id"]
-                for m in records.values()
-                if m["kind"] == "measurement"
-                and reliability(m, records, ws["clock"])["verdict"] == "INVALID"
-            }
-            superseded = {x["supersedes_id"] for x in records.values() if x["kind"] == "correction"}
-            units = [x for x in records.values() if x["kind"] == "unit"]
-            exact = [u for u in units if set(u["evidence_ids"]) & (bad_m | superseded)]
-            partial = any(
-                x["kind"] == "run" and x.get("lineage") != "COMPLETE" for x in records.values()
-            )
-            broaden = partial and bool(revocations or superseded)
-            affected = units if broaden else exact
+            affected,broaden=self._affected(records,past['clock'] if decision_id else ws['clock'])
             active_holds = [
                 h
                 for h in records.values()
@@ -1016,7 +1101,11 @@ class Service:
                 and p["run_id"] == run["id"]
                 and p["status"] == "ACTIVE"
                 and p["used_units"] < p["max_units"]
+                and instant(ws['clock'])<instant(p['expires_at'])
+                and p.get('fingerprint')==decision['applicability_fingerprint']
+                and self._support_valid(p,records,ws['clock'])
             ]
+            if active_holds or decision['recommendation']!='ACCEPT':permits=[]
             op = "produce" if permits else "authorize"
             label = "Continue simulation" if permits else "Authorize simulated run"
             if active_holds:
@@ -1104,8 +1193,113 @@ class Service:
                 observations=[x for x in records.values() if x['kind']=='measurement' and x.get('study_id')==study_id and instant(x['available_at'])<=instant(result['clock'])]
                 tests=[x for x in records.values() if x['kind']=='functional' and x.get('study_id')==study_id and instant(x['available_at'])<=instant(result['clock'])]
                 remaining=max(0,24-(instant(result['clock'])-max(instant(x['occurred_at']) for x in observations)).total_seconds()/3600) if observations else None
-                result['test_sets'].append({'study_id':study_id,'specimens':len({x['sample_id'] for x in observations}),'wait_hours_remaining':remaining,'has_results':bool(tests)})
+                check=next((x for x in decision.get('study_checks',[]) if x['study_id']==study_id),{})
+                result['test_sets'].append({'study_id':study_id,'specimens':len({x['sample_id'] for x in observations}),'wait_hours_remaining':remaining,'has_results':bool(tests),
+                    'purpose':records[study_id].get('purpose','LEGACY_BASELINE'),'status':'PLANNED' if not observations else 'IN_PROGRESS' if not tests else 'EVIDENCE_READY' if check.get('passing') else 'NEEDS_REVIEW'})
+            cut=past['cursor'] if decision_id else ws['cursor']
+            result['history_limits']={'events':100,'decisions':100,'edges':120,
+                'events_total':c.execute(text('SELECT count(*) FROM events WHERE workspace_id=:w AND seq<=:cut'),{'w':wid,'cut':cut}).scalar(),
+                'export':'Complete workspace records are available via Export experiment; on-screen lists are bounded recent views'}
+            result['release']={'allowed':bool(permits) and not decision_id,'permit_ids':[p['id'] for p in permits],
+                'active_hold_count':len(active_holds),'required_recovery_actions':[a['id'] for a in self._recovery_blockers(run,records)]}
+            result['packaging_change']=self._packaging_task(result)
             return result
+
+    @staticmethod
+    def _packaging_task(s):
+        """Explain persisted scope/evidence; never grants or invents permission."""
+        r=s['records'];run=s['run'];ev=s['decision'];now=s['clock']
+        studies=sorted([x for x in r.values() if x['kind']=='study' and x.get('run_id')==run['id']],
+                       key=lambda x:(x.get('created_at',x.get('condition_start',x['available_at'])),x.get('recorded_revision',0),x['id']))
+        previous=next((x for x in studies if not x.get('action_id') and not x.get('purpose')),studies[0] if studies else None)
+        previous_scope=previous.get('scope',{}) if previous else {}
+        changes=[]
+        for field,label in [('bottle_lot_id','Bottle batch'),('closure_lot_id','Cap batch'),('config_id','Machine setup')]:
+            old=r.get(previous_scope.get(field),{});current=r.get(run.get(field),{})
+            changes.append({'field':field,'label':label,'previous_id':old.get('id'),'current_id':current.get('id'),
+                'previous':old.get('label','Not recorded'),'current':current.get('label','Missing identity'),
+                'previous_supplier':old.get('supplier'),'current_supplier':current.get('supplier'),
+                'changed':old.get('id')!=current.get('id')})
+        changed=any(x['changed'] for x in changes)
+        prior_applies=bool(previous and applicable(previous,run))
+        required=[x for x in studies if x['id'] in ev['study_ids'] and x.get('purpose')=='REQUIRED']
+        required.sort(key=lambda x:(x.get('recorded_revision',0),x.get('created_at',''),x['id']))
+        current=required[-1] if required else None
+        state=next((x for x in s['test_sets'] if current and x['study_id']==current['id']),None)
+        actions=[x for x in r.values() if x['kind']=='action' and x.get('run_id')==run['id'] and x.get('required_for_release',True)
+                 and x.get('execution_scope',x.get('scope',{}))==scope_of(run)]
+        actions.sort(key=lambda x:(x.get('recorded_revision',0),x.get('created_at',''),x['id']))
+        a=next((x for x in reversed(actions) if x.get('status')!='VERIFIED'),None)
+        incidents=[x for x in r.values() if x['kind']=='investigation' and x.get('run_id')==run['id']]
+        q={x['type']:x for x in ev['requirements']}
+        def next_action(op,title,why,payload=None):
+            return {'operation':op,'label':title,'why':why,'payload':payload or {},'qa_required':op in QA}
+        nxt=next_action(None,'Review the unresolved requirement','No automatic physical outcome or approval is supplied.')
+        if s['historical']:
+            nxt=next_action(None,'Return to the current view','Historical decisions are read-only.')
+        elif run.get('state')=='COMPLETED':
+            nxt=next_action(None,'This run is complete','Inspect its history or create another experiment.')
+        elif q.get('GOVERNING_POLICY',{}).get('verdict')!='SATISFIED':
+            nxt=next_action(None,'QA must restore the governing policy','The backend will not infer missing limits or grant permission.')
+        elif ev['recommendation']=='ACCEPT' and not changed and not required and not actions and not s['release']['allowed']:
+            target=next((x['id'] for x in r.values() if x['kind']=='lot' and x['id'].endswith('closure-c02')),None)
+            nxt=next_action('change_context','Try a new-supplier cap batch','The original example tests cover this baseline. Make the packaging change explicit, then inspect what remains covered.',{'run_id':run['id'],'field':'closure_lot_id','value':target})
+        elif a and a['status']=='PROPOSED':
+            nxt=next_action('approve_action','Review the change plan','QA reviews the proposed comparison and the fresh-test plan before execution.',{'action_id':a['id']})
+        elif a and a['status']=='APPROVED':
+            nxt=next_action('execute_action','Apply the approved setup','This records the approved fictional setup; it does not predict a better seal.',{'action_id':a['id']})
+        elif a and a['status']=='EXECUTED':
+            nxt=next_action('open_study','Start the required fresh verification','Old tests cannot complete a separately required post-action verification.',{'run_id':run['id'],'action_id':a['id']})
+        elif a and a['status']=='VERIFYING' and any(x['study_id'] in a.get('verified_study_ids',[]) for x in ev.get('study_checks',[])):
+            nxt=next_action('assess_action','Review the new verification','QA must assess the independently complete new evidence.',{'action_id':a['id']})
+        elif a and a['status']=='VERIFYING' and any(x.get('passing') and r[x['study_id']].get('action_id')==a['id'] for x in ev.get('study_checks',[])) and q.get('REQUIRED_SOURCE_HEALTH',{}).get('verdict')=='SATISFIED':
+            nxt=next_action('assess_action','Review the new verification','Passing evidence is not yet a completed QA recovery review.',{'action_id':a['id']})
+        elif ev['recommendation']!='ACCEPT' and (ev['recommendation']=='REJECT' or (q.get('FUNCTIONAL_ENDPOINT',{}).get('verdict')=='UNKNOWN' and any(x['kind']=='functional' and x.get('outcome')=='FAIL' and x['id'] in q.get('FUNCTIONAL_ENDPOINT',{}).get('evidence_refs',[]) for x in r.values()))):
+            verified=next((x for x in reversed(actions) if x['status']=='VERIFIED'),None)
+            failed=next((x for x in reversed(studies) if x['id'] in ev['study_ids'] and any(f['kind']=='functional' and f.get('study_id')==x['id'] and f.get('outcome')=='FAIL' and f['id'] in q.get('FUNCTIONAL_ENDPOINT',{}).get('evidence_refs',[]) for f in r.values())),None)
+            if verified and failed and verified.get('verified_study_ids'):
+                nxt=next_action('disposition_study','Review the prior failed study','Retain the genuine failure and record a scoped QA determination supported by the verified fresh study.',{'study_id':failed['id'],'verification_study_id':verified['verified_study_ids'][-1],'action_id':verified['id']})
+            elif not incidents:
+                nxt=next_action('investigate','Describe the observed failure','A supplied failure needs an investigation; a new PASS cannot erase it.',{'run_id':run['id']})
+            elif not any(x['kind']=='hypothesis' and x.get('investigation_id')==incidents[-1]['id'] for x in r.values()):
+                nxt=next_action('hypothesis','Record a possible explanation','Compare possibilities before claiming a cause.',{'investigation_id':incidents[-1]['id']})
+            elif not a:
+                nxt=next_action('propose_action','Plan a controlled comparison','Choose a reviewed alternate setup and define fresh verification; the app has not discovered an optimal setting.',{'investigation_id':incidents[-1]['id']})
+            else:
+                nxt=next_action(None,'Verification remains unresolved','The current trial did not establish recovery. Review the recorded problem and plan an appropriate further comparison.')
+        elif not current and not prior_applies:
+            nxt=next_action('open_study','Start tests for this configuration','The earlier qualification does not cover this cap/supplier combination.',{'run_id':run['id']})
+        elif state and not state['specimens']:
+            nxt=next_action('measure_batch','Enter three specimen readings','Record fictional application-torque observations against this required set. An empty plan is not qualification.',{'study_id':current['id']})
+        elif state and not state['has_results'] and state.get('wait_hours_remaining',0)>0:
+            nxt=next_action('demo_controls','Advance the fictional test wait','Use the clearly labelled demonstration clock controls. No physical test is performed.')
+        elif q.get('REQUIRED_SOURCE_HEALTH',{}).get('verdict')!='SATISFIED':
+            nxt=next_action('demo_controls','Refresh the fictional record feed','The demo feed is stale. This control sets a synthetic freshness flag; it is not real source reconciliation.')
+        elif state and not state['has_results']:
+            nxt=next_action('functional','Record the independent leak result','Supply your own fictional outcome after the wait. Torque does not determine it.',{'study_id':current['id']})
+        elif ev['recommendation']!='ACCEPT':
+            nxt=next_action('measure_batch','Review and complete the required evidence','Inspect missing eligibility, count, conformance or independent-result requirements. Do not overwrite a genuine failure.',{'study_id':current['id']} if current else {})
+        elif s['release']['active_hold_count']:
+            nxt=next_action('resolve_hold','Review and resolve the production pause','Tests are complete; the recorded pause still needs QA resolution.',{'run_id':run['id']})
+        elif not s['release']['allowed']:
+            nxt=next_action('authorize','Authorize bounded simulated production','QA permission is separate from passing tests. Review the condition and choose unit/time limits.',{'run_id':run['id']})
+        else:
+            nxt=next_action('produce','Record authorized sample units','A live scoped QA permission is present. The server rechecks it at use.',{'run_id':run['id']})
+        checks=q.get('FUNCTIONAL_ENDPOINT',{})
+        title='Simulated continuation authorized' if s['release']['allowed'] else 'Tests complete; production still awaits QA' if ev['recommendation']=='ACCEPT' else 'A recorded condition failed' if ev['recommendation']=='REJECT' else 'Production paused: evidence remains unresolved'
+        reference_tests=[x for x in r.values() if previous and x['kind']=='functional' and x.get('study_id')==previous['id']]
+        return {'product':r.get(run.get('product_id'),{}).get('label','Fictional bottled lotion'),'quantity':'100 g bottled lotion',
+            'previous_study':{'id':previous['id'] if previous else None,'label':previous.get('label') if previous else 'No earlier study',
+                'date':previous.get('created_at',previous.get('available_at')) if previous else None,'applies':prior_applies,
+                'recorded_results':len(reference_tests),'scope':previous_scope},'rows':changes,'changed':changed,
+            'physical_context':'A different cap or supplier can change how the assembled package seals or behaves during ageing. A physical test is required to establish performance; this app does not predict it.',
+            'coverage_reason':'The earlier record targets the original configuration and its explicitly covered C03 alternative. The changed condition is outside that recorded approval.' if not prior_applies else 'The earlier record covers these identities. Any separately required new verification must still be completed; test readiness is not production permission.',
+            'affected_scope':{'run_id':run['id'],'run':run['label'],'line':run['line'],'planned_units':run.get('target_units'),
+                'description':'Further simulated production on this selected run. Other runs retain their own inputs and are checked independently.'},
+            'title':title,'evidence':ev['recommendation'],'permission_granted':s['release']['allowed'],
+            'next':nxt,'current_test_set':state,'minimum_specimens':r.get(run.get('policy_id'),{}).get('minimum_specimens'),
+            'hold_reason':next((x['reason'] for x in ev['requirements'] if x['verdict']!='SATISFIED'),'Applicable tests complete; explicit QA review and permission remain separate.'),
+            'containment_scope':'Potential impact counts cover the whole saved experiment; they are separate from this selected run’s future permission.'}
 
     def audit_read(self, wid, actor, action, detail):
         with self.store.transaction() as c:

@@ -1,0 +1,48 @@
+{
+  "completed_at": "2026-11-02T16:43:41.130771+00:00",
+  "provenance": "SYNTHETIC_SOFTWARE_ONLY",
+  "backend": {
+    "tests": 94,
+    "failed": 0,
+    "new_review_regressions": 27
+  },
+  "frontend": {
+    "tests": 8,
+    "passed": 8
+  },
+  "typescript_no_emit": "PASSED",
+  "production_build": "PASSED",
+  "contract_generation": "PASSED",
+  "browser": {
+    "checks": 13,
+    "runtime_errors": [],
+    "basis": "Developer-operated real React forms with explicit synthetic choices; not a blind novice study"
+  },
+  "contrast": {
+    "checked_text_elements": 902,
+    "failures": 0,
+    "limits": "Computed solid foreground/background colors; excludes disabled and aria-hidden controls; not a complete accessibility certification"
+  },
+  "frozen_v1_cases": {
+    "passed": 20,
+    "total": 20,
+    "reference": "Limited separately specified checklist, not a validated industrial SOP"
+  },
+  "declared_review_groups": 15,
+  "protected_originals": 44,
+  "commands": [
+    "qualityos/verify.ps1",
+    "PYTHONPATH=backend .venv/Scripts/python.exe -m pytest backend/tests -q --tb=short --junitxml=docs/validation/review-remediation/backend.xml",
+    "npm test -- --reporter=json --outputFile=../docs/validation/review-remediation/frontend.json",
+    "node node_modules/typescript/bin/tsc --noEmit --incremental false",
+    "npm run build",
+    "node web/scripts/review-remediation-check.mjs",
+    "node web/scripts/review-remediation-contrast.mjs"
+  ],
+  "limitations": [
+    "Existing Starlette multipart PendingDeprecationWarning",
+    "No independent fresh-user comprehension study",
+    "No clean online environment or factory/physical validation",
+    "No new scaling benchmark or new power-loss test"
+  ]
+}

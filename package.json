@@ -1,0 +1,10 @@
+{
+  "name": "qualityos-workspace",
+  "private": true,
+  "description": "Local launch commands for the persisted QualityOS prototype",
+  "scripts": {
+    "start": "npm run build && powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File qualityos/start.ps1",
+    "dev": "npm start",
+    "build": "npm --prefix qualityos/web run build"
+  }
+}

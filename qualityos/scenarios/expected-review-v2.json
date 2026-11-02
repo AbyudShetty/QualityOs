@@ -1,0 +1,22 @@
+{
+  "version": "review-v2-20261102",
+  "provenance": "SYNTHETIC",
+  "basis": "Hand-declared review expectations, fixed before implementation; not generated from production evaluator",
+  "cases": [
+    {"id":"R01", "input":"Missing, wrong-kind, incomplete or malformed governing policy", "expected":"NO_ACCEPT_NO_PERMISSION"},
+    {"id":"R02", "input":"Referenced packaging/configuration identity absent despite COMPLETE lineage flag", "expected":"HOLD"},
+    {"id":"R03", "input":"Successive QA recording-error corrections PASS to FAIL to INCONCLUSIVE to PASS", "expected":"TERMINAL_SUCCESSOR_USED_HISTORY_RETAINED"},
+    {"id":"R04", "input":"Correction fork, non-QA correction or failed transaction", "expected":"REJECT_WITHOUT_PARTIAL_COMMIT"},
+    {"id":"R05", "input":"Approved required recovery action, same scope, one new specimen plus sufficient old proof", "expected":"NO_RELEASE_UNTIL_FRESH_VERIFICATION_REVIEW"},
+    {"id":"R06", "input":"Optional action or different independent run with sufficient applicable evidence", "expected":"NO_BLANKET_ACTION_BLOCK"},
+    {"id":"R07", "input":"New empty or inconclusive mandatory test set plus old sufficient proof", "expected":"HOLD"},
+    {"id":"R08", "input":"Explicit supplemental empty/inconclusive set plus old independently sufficient proof", "expected":"ACCEPT_IF_NO_APPLICABLE_FAILURE"},
+    {"id":"R09", "input":"Three one-specimen studies with no independently sufficient study", "expected":"HOLD_NO_POOLING"},
+    {"id":"R10", "input":"Genuine applicable FAIL plus newer same-condition PASS without QA determination", "expected":"HOLD_OR_REJECT"},
+    {"id":"R11", "input":"QA failed-study determination linked to distinct complete passing verification and verified action", "expected":"SCOPED_ACCEPT_OR_REMAINING_UNRESOLVED_BLOCK"},
+    {"id":"R12", "input":"Late invalidation of prior-scope proof after a different current scope qualified", "expected":"DURABLE_OLD_UNIT_CONTAINMENT_CURRENT_SCOPE_INDEPENDENT"},
+    {"id":"R13", "input":"Unapproved multi-axis envelope extrapolation", "expected":"NO_ACCEPT"},
+    {"id":"R14", "input":"C01 approved baseline to uncovered C02, then independently complete fresh PASS and explicit QA steps", "expected":"ACCEPT_THEN_HOLD_THEN_BOUNDED_SIMULATED_PERMISSION"},
+    {"id":"R15", "input":"Explicitly covered C03 alternative", "expected":"ACCEPT_WITH_SEPARATE_SCOPED_QA_PERMISSION"}
+  ]
+}

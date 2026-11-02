@@ -1,0 +1,663 @@
+{
+  "pdf": "QUALITYOS_VISUAL_USER_GUIDE.pdf",
+  "pages": 39,
+  "authentic_captures": 44,
+  "annotated_figures": 42,
+  "screenshot_basis": "Isolated var/ui-checks store, not user application state",
+  "provenance": "SYNTHETIC",
+  "markdown_unchanged": true,
+  "markdown_sha256": "4421cad919adb3d63c8d481a7c12832b7ab38556f514c96b2cdcad2b9cffd082",
+  "pdf_bytes": 18768671,
+  "pdf_sha256": "c019500131fe4c6e6bc893d60c4f2b9b1f5aa3be09f742002aeea17d369dfccd",
+  "selectable_text": true,
+  "bookmarks": 39,
+  "layout": [
+    {
+      "page": 1,
+      "screenshot": "02-introduction",
+      "css_to_pdf_scale": 0.207,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Purpose"
+        },
+        {
+          "number": 2,
+          "label": "Factory context"
+        },
+        {
+          "number": 3,
+          "label": "Simulation boundary"
+        }
+      ]
+    },
+    {
+      "page": 3,
+      "screenshot": "02-introduction",
+      "css_to_pdf_scale": 0.278,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Purpose"
+        },
+        {
+          "number": 2,
+          "label": "Factory context"
+        },
+        {
+          "number": 3,
+          "label": "Simulation boundary"
+        }
+      ]
+    },
+    {
+      "page": 4,
+      "screenshot": "01-login",
+      "css_to_pdf_scale": 1.026,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Account"
+        },
+        {
+          "number": 2,
+          "label": "Private password"
+        },
+        {
+          "number": 3,
+          "label": "Sign in"
+        }
+      ]
+    },
+    {
+      "page": 5,
+      "screenshot": "03-starting-points",
+      "css_to_pdf_scale": 0.494,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Ready-made example"
+        },
+        {
+          "number": 2,
+          "label": "Missing coverage"
+        },
+        {
+          "number": 3,
+          "label": "Your own inputs"
+        }
+      ]
+    },
+    {
+      "page": 6,
+      "screenshot": "07-create-experiment",
+      "css_to_pdf_scale": 0.584,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Name the session"
+        },
+        {
+          "number": 2,
+          "label": "Untested C02 caps"
+        },
+        {
+          "number": 3,
+          "label": "Original v1 setup"
+        }
+      ]
+    },
+    {
+      "page": 7,
+      "screenshot": "04-navigation",
+      "css_to_pdf_scale": 0.278,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Four tabs"
+        },
+        {
+          "number": 2,
+          "label": "Saved session"
+        },
+        {
+          "number": 3,
+          "label": "Selected run"
+        }
+      ]
+    },
+    {
+      "page": 8,
+      "screenshot": "08-paused-setup",
+      "css_to_pdf_scale": 0.647,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Current decision"
+        }
+      ]
+    },
+    {
+      "page": 9,
+      "screenshot": "09-start-test-set",
+      "css_to_pdf_scale": 0.494,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Start the empty set"
+        },
+        {
+          "number": 2,
+          "label": "Why data entry is unavailable"
+        }
+      ]
+    },
+    {
+      "page": 10,
+      "screenshot": "10-enter-readings",
+      "css_to_pdf_scale": 0.679,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Current test set"
+        },
+        {
+          "number": 2,
+          "label": "Three specimens"
+        },
+        {
+          "number": 3,
+          "label": "Eligible reference"
+        }
+      ]
+    },
+    {
+      "page": 11,
+      "screenshot": "11-advance-time",
+      "css_to_pdf_scale": 0.74,
+      "markers": [
+        {
+          "number": 1,
+          "label": "24 fictional hours"
+        },
+        {
+          "number": 2,
+          "label": "Submit the time advance"
+        }
+      ]
+    },
+    {
+      "page": 12,
+      "screenshot": "12-confirm-records",
+      "css_to_pdf_scale": 0.712,
+      "markers": [
+        {
+          "number": 1,
+          "label": "What this confirmation means"
+        },
+        {
+          "number": 2,
+          "label": "Confirm the feed"
+        }
+      ]
+    },
+    {
+      "page": 13,
+      "screenshot": "13-independent-result",
+      "css_to_pdf_scale": 0.552,
+      "markers": [
+        {
+          "number": 1,
+          "label": "The same specimens"
+        },
+        {
+          "number": 2,
+          "label": "Choose FAIL for this route"
+        },
+        {
+          "number": 3,
+          "label": "Save your supplied outcome"
+        }
+      ]
+    },
+    {
+      "page": 14,
+      "screenshot": "14-failed-check",
+      "css_to_pdf_scale": 0.826,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Independent leak requirement failed"
+        },
+        {
+          "number": 2,
+          "label": "Torque can still meet its own requirement"
+        }
+      ]
+    },
+    {
+      "page": 15,
+      "screenshot": "15-describe-problem",
+      "css_to_pdf_scale": 0.862,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Recognizable title"
+        },
+        {
+          "number": 2,
+          "label": "Observation before cause"
+        }
+      ]
+    },
+    {
+      "page": 16,
+      "screenshot": "16-possible-explanation",
+      "css_to_pdf_scale": 0.884,
+      "markers": [
+        {
+          "number": 1,
+          "label": "A possibility, not a conclusion"
+        },
+        {
+          "number": 2,
+          "label": "How to test the explanation"
+        }
+      ]
+    },
+    {
+      "page": 17,
+      "screenshot": "17-plan-change",
+      "css_to_pdf_scale": 0.862,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Alternate setup v2"
+        },
+        {
+          "number": 2,
+          "label": "Fresh evidence plan"
+        }
+      ]
+    },
+    {
+      "page": 18,
+      "screenshot": "18-review-note",
+      "css_to_pdf_scale": 0.862,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Why try this change?"
+        },
+        {
+          "number": 2,
+          "label": "Read and adapt the example"
+        },
+        {
+          "number": 3,
+          "label": "Save the plan"
+        }
+      ]
+    },
+    {
+      "page": 19,
+      "screenshot": "19-approve-plan",
+      "css_to_pdf_scale": 1.048,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Review before execution"
+        }
+      ]
+    },
+    {
+      "page": 19,
+      "screenshot": "20-apply-setup",
+      "css_to_pdf_scale": 1.048,
+      "markers": [
+        {
+          "number": 2,
+          "label": "Record the approved change"
+        }
+      ]
+    },
+    {
+      "page": 20,
+      "screenshot": "21-start-verification",
+      "css_to_pdf_scale": 1.048,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Fresh post-change tests"
+        }
+      ]
+    },
+    {
+      "page": 20,
+      "screenshot": "22-fresh-readings",
+      "css_to_pdf_scale": 0.519,
+      "markers": [
+        {
+          "number": 2,
+          "label": "New v2 test set"
+        },
+        {
+          "number": 3,
+          "label": "Fresh values, not borrowed proof"
+        }
+      ]
+    },
+    {
+      "page": 21,
+      "screenshot": "23-fresh-pass",
+      "css_to_pdf_scale": 0.862,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Fresh verification set"
+        },
+        {
+          "number": 2,
+          "label": "Supplied PASS for this route"
+        }
+      ]
+    },
+    {
+      "page": 22,
+      "screenshot": "24-review-verification",
+      "css_to_pdf_scale": 0.627,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Assess fresh evidence"
+        },
+        {
+          "number": 2,
+          "label": "Change status"
+        }
+      ]
+    },
+    {
+      "page": 23,
+      "screenshot": "25-resolve-pause",
+      "css_to_pdf_scale": 0.862,
+      "markers": [
+        {
+          "number": 1,
+          "label": "What resolves the gap?"
+        },
+        {
+          "number": 2,
+          "label": "Resolve; permission comes next"
+        }
+      ]
+    },
+    {
+      "page": 24,
+      "screenshot": "26-bounded-permission",
+      "css_to_pdf_scale": 0.862,
+      "markers": [
+        {
+          "number": 1,
+          "label": "At most 10 units"
+        },
+        {
+          "number": 2,
+          "label": "For 30 demonstration minutes"
+        }
+      ]
+    },
+    {
+      "page": 25,
+      "screenshot": "27-record-units",
+      "css_to_pdf_scale": 0.352,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Choose the count"
+        },
+        {
+          "number": 2,
+          "label": "Server rechecks before saving"
+        }
+      ]
+    },
+    {
+      "page": 25,
+      "screenshot": "28-recovered-production",
+      "css_to_pdf_scale": 0.762,
+      "markers": [
+        {
+          "number": 3,
+          "label": "Five actual saved sample records"
+        },
+        {
+          "number": 4,
+          "label": "Five left on this permission"
+        }
+      ]
+    },
+    {
+      "page": 26,
+      "screenshot": "29-decision-history",
+      "css_to_pdf_scale": 0.484,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Saved choices and consequences"
+        },
+        {
+          "number": 2,
+          "label": "Earlier knowledge cuts"
+        }
+      ]
+    },
+    {
+      "page": 27,
+      "screenshot": "30-historical-view",
+      "css_to_pdf_scale": 0.473,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Read-only earlier knowledge"
+        },
+        {
+          "number": 2,
+          "label": "Return before editing"
+        }
+      ]
+    },
+    {
+      "page": 28,
+      "screenshot": "38-record-details",
+      "css_to_pdf_scale": 0.49,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Inspect the original record"
+        }
+      ]
+    },
+    {
+      "page": 28,
+      "screenshot": "40-export",
+      "css_to_pdf_scale": 1.048,
+      "markers": [
+        {
+          "number": 2,
+          "label": "Download the saved records"
+        }
+      ]
+    },
+    {
+      "page": 29,
+      "screenshot": "32-custom-inputs",
+      "css_to_pdf_scale": 0.884,
+      "markers": [
+        {
+          "number": 1,
+          "label": "New fictional material identity"
+        },
+        {
+          "number": 2,
+          "label": "Name the setup"
+        },
+        {
+          "number": 3,
+          "label": "Save a chosen setting"
+        }
+      ]
+    },
+    {
+      "page": 30,
+      "screenshot": "41-covered-caps",
+      "css_to_pdf_scale": 0.647,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Different caps can still be covered"
+        }
+      ]
+    },
+    {
+      "page": 31,
+      "screenshot": "33-expired-reference",
+      "css_to_pdf_scale": 0.412,
+      "markers": [
+        {
+          "number": 1,
+          "label": "In-range numbers"
+        },
+        {
+          "number": 2,
+          "label": "Expired reference"
+        }
+      ]
+    },
+    {
+      "page": 31,
+      "screenshot": "34-unusable-measurement",
+      "css_to_pdf_scale": 0.428,
+      "markers": [
+        {
+          "number": 3,
+          "label": "Reliability and range are separate"
+        }
+      ]
+    },
+    {
+      "page": 32,
+      "screenshot": "31-advanced-controls",
+      "css_to_pdf_scale": 1.048,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Reference withdrawal"
+        },
+        {
+          "number": 2,
+          "label": "Versioned correction"
+        }
+      ]
+    },
+    {
+      "page": 33,
+      "screenshot": "42-reference-withdrawal",
+      "css_to_pdf_scale": 0.767,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Reference being withdrawn"
+        },
+        {
+          "number": 2,
+          "label": "Affected measurement period"
+        },
+        {
+          "number": 3,
+          "label": "End of affected period"
+        }
+      ]
+    },
+    {
+      "page": 34,
+      "screenshot": "43-potential-impact",
+      "css_to_pdf_scale": 0.497,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Five potentially affected samples"
+        },
+        {
+          "number": 2,
+          "label": "Separate handling review"
+        }
+      ]
+    },
+    {
+      "page": 34,
+      "screenshot": "44-handling-decision",
+      "css_to_pdf_scale": 0.862,
+      "markers": [
+        {
+          "number": 3,
+          "label": "Choose how to handle the samples"
+        }
+      ]
+    },
+    {
+      "page": 35,
+      "screenshot": "37-evaluation",
+      "css_to_pdf_scale": 0.495,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Run the declared software cases"
+        },
+        {
+          "number": 2,
+          "label": "Actual declared-case comparison"
+        }
+      ]
+    },
+    {
+      "page": 36,
+      "screenshot": "36-saved-list",
+      "css_to_pdf_scale": 0.496,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Independent practice sessions"
+        },
+        {
+          "number": 2,
+          "label": "Preserved earlier sessions"
+        }
+      ]
+    },
+    {
+      "page": 37,
+      "screenshot": "39-mobile-navigation",
+      "css_to_pdf_scale": 0.608,
+      "markers": [
+        {
+          "number": 1,
+          "label": "Same four tabs on mobile"
+        },
+        {
+          "number": 2,
+          "label": "Same saved experiments"
+        }
+      ]
+    }
+  ],
+  "document_checks": {
+    "all_pages_rendered": 39,
+    "nonempty_selectable_text_pages": 39,
+    "bookmarks": 39,
+    "clickable_contents_entries": 8,
+    "landscape_pages": 39,
+    "markdown_unchanged": true,
+    "scope": "Document structure and developer visual review; no claim of independent novice comprehension"
+  }
+}

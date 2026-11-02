@@ -1,4 +1,28 @@
 {
+  "disposition_study": {
+    "additionalProperties": false,
+    "properties": {
+      "study_id": {
+        "title": "Study Id",
+        "type": "string"
+      },
+      "verification_study_id": {
+        "title": "Verification Study Id",
+        "type": "string"
+      },
+      "action_id": {
+        "title": "Action Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "study_id",
+      "verification_study_id",
+      "action_id"
+    ],
+    "title": "StudyDisposition",
+    "type": "object"
+  },
   "change_context": {
     "additionalProperties": false,
     "properties": {
@@ -47,6 +71,15 @@
         ],
         "default": null,
         "title": "Action Id"
+      },
+      "purpose": {
+        "default": "REQUIRED",
+        "enum": [
+          "REQUIRED",
+          "SUPPLEMENTAL"
+        ],
+        "title": "Purpose",
+        "type": "string"
       }
     },
     "required": [
@@ -306,6 +339,15 @@
         ],
         "title": "Outcome",
         "type": "string"
+      },
+      "input_basis": {
+        "const": "SYNTHETIC_ALL_SPECIMENS_SAME_OUTCOME",
+        "default": "SYNTHETIC_ALL_SPECIMENS_SAME_OUTCOME",
+        "enum": [
+          "SYNTHETIC_ALL_SPECIMENS_SAME_OUTCOME"
+        ],
+        "title": "Input Basis",
+        "type": "string"
       }
     },
     "required": [
@@ -424,6 +466,11 @@
         "minLength": 10,
         "title": "Verification Plan",
         "type": "string"
+      },
+      "required_for_release": {
+        "default": true,
+        "title": "Required For Release",
+        "type": "boolean"
       }
     },
     "required": [
@@ -606,6 +653,15 @@
           "INCONCLUSIVE"
         ],
         "title": "Outcome",
+        "type": "string"
+      },
+      "correction_basis": {
+        "const": "RECORDING_ERROR",
+        "default": "RECORDING_ERROR",
+        "enum": [
+          "RECORDING_ERROR"
+        ],
+        "title": "Correction Basis",
         "type": "string"
       }
     },

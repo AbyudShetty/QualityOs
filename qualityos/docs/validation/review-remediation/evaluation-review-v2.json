@@ -1,0 +1,149 @@
+{
+  "version": "review-v2-20261102",
+  "provenance": "SYNTHETIC",
+  "basis": "Hand-declared review expectations, fixed before implementation; not generated from production evaluator",
+  "cases": [
+    {
+      "id": "R01",
+      "input": "Missing, wrong-kind, incomplete or malformed governing policy",
+      "expected": "NO_ACCEPT_NO_PERMISSION",
+      "executed_test_functions": [
+        "test_governing_policy_never_defaults_to_accept",
+        "test_invalid_policy_blocks_actual_authorization_transaction"
+      ],
+      "result": "PASSED_DECLARED_SOFTWARE_BOUNDARY"
+    },
+    {
+      "id": "R02",
+      "input": "Referenced packaging/configuration identity absent despite COMPLETE lineage flag",
+      "expected": "HOLD",
+      "executed_test_functions": [
+        "test_complete_flag_does_not_replace_actual_identity"
+      ],
+      "result": "PASSED_DECLARED_SOFTWARE_BOUNDARY"
+    },
+    {
+      "id": "R03",
+      "input": "Successive QA recording-error corrections PASS to FAIL to INCONCLUSIVE to PASS",
+      "expected": "TERMINAL_SUCCESSOR_USED_HISTORY_RETAINED",
+      "executed_test_functions": [
+        "test_successor_corrections_preserve_chain_and_historical_attestors"
+      ],
+      "result": "PASSED_DECLARED_SOFTWARE_BOUNDARY"
+    },
+    {
+      "id": "R04",
+      "input": "Correction fork, non-QA correction or failed transaction",
+      "expected": "REJECT_WITHOUT_PARTIAL_COMMIT",
+      "executed_test_functions": [
+        "test_operator_cannot_correct_a_failed_result",
+        "test_unhandled_failure_returns_controlled_json_and_rolls_back"
+      ],
+      "result": "PASSED_DECLARED_SOFTWARE_BOUNDARY"
+    },
+    {
+      "id": "R05",
+      "input": "Approved required recovery action, same scope, one new specimen plus sufficient old proof",
+      "expected": "NO_RELEASE_UNTIL_FRESH_VERIFICATION_REVIEW",
+      "executed_test_functions": [
+        "test_sparse_required_recovery_cannot_resolve_authorize_or_produce",
+        "test_required_action_blocks_an_existing_permission_before_any_new_study"
+      ],
+      "result": "PASSED_DECLARED_SOFTWARE_BOUNDARY"
+    },
+    {
+      "id": "R06",
+      "input": "Optional action or different independent run with sufficient applicable evidence",
+      "expected": "NO_BLANKET_ACTION_BLOCK",
+      "executed_test_functions": [
+        "test_optional_action_does_not_block_unrelated_valid_production"
+      ],
+      "result": "PASSED_DECLARED_SOFTWARE_BOUNDARY"
+    },
+    {
+      "id": "R07",
+      "input": "New empty or inconclusive mandatory test set plus old sufficient proof",
+      "expected": "HOLD",
+      "executed_test_functions": [
+        "test_empty_required_set_is_not_coverage_or_qualification",
+        "test_mandatory_inconclusive_cannot_borrow_old_proof"
+      ],
+      "result": "PASSED_DECLARED_SOFTWARE_BOUNDARY"
+    },
+    {
+      "id": "R08",
+      "input": "Explicit supplemental empty/inconclusive set plus old independently sufficient proof",
+      "expected": "ACCEPT_IF_NO_APPLICABLE_FAILURE",
+      "executed_test_functions": [
+        "test_explicit_supplemental_inconclusive_preserves_independent_proof"
+      ],
+      "result": "PASSED_DECLARED_SOFTWARE_BOUNDARY"
+    },
+    {
+      "id": "R09",
+      "input": "Three one-specimen studies with no independently sufficient study",
+      "expected": "HOLD_NO_POOLING",
+      "executed_test_functions": [
+        "test_three_sparse_studies_cannot_pool_to_qualification"
+      ],
+      "result": "PASSED_DECLARED_SOFTWARE_BOUNDARY"
+    },
+    {
+      "id": "R10",
+      "input": "Genuine applicable FAIL plus newer same-condition PASS without QA determination",
+      "expected": "HOLD_OR_REJECT",
+      "executed_test_functions": [
+        "test_real_failure_needs_qa_study_determination_not_newer_pass"
+      ],
+      "result": "PASSED_DECLARED_SOFTWARE_BOUNDARY"
+    },
+    {
+      "id": "R11",
+      "input": "QA failed-study determination linked to distinct complete passing verification and verified action",
+      "expected": "SCOPED_ACCEPT_OR_REMAINING_UNRESOLVED_BLOCK",
+      "executed_test_functions": [
+        "test_real_failure_needs_qa_study_determination_not_newer_pass",
+        "test_scoped_determination_cannot_clear_another_unresolved_failure"
+      ],
+      "result": "PASSED_DECLARED_SOFTWARE_BOUNDARY"
+    },
+    {
+      "id": "R12",
+      "input": "Late invalidation of prior-scope proof after a different current scope qualified",
+      "expected": "DURABLE_OLD_UNIT_CONTAINMENT_CURRENT_SCOPE_INDEPENDENT",
+      "executed_test_functions": [
+        "test_old_scope_impact_has_durable_containment_without_current_blanket_hold"
+      ],
+      "result": "PASSED_DECLARED_SOFTWARE_BOUNDARY"
+    },
+    {
+      "id": "R13",
+      "input": "Unapproved multi-axis envelope extrapolation",
+      "expected": "NO_ACCEPT",
+      "executed_test_functions": [
+        "test_unapproved_cartesian_envelope_cannot_accept"
+      ],
+      "result": "PASSED_DECLARED_SOFTWARE_BOUNDARY"
+    },
+    {
+      "id": "R14",
+      "input": "C01 approved baseline to uncovered C02, then independently complete fresh PASS and explicit QA steps",
+      "expected": "ACCEPT_THEN_HOLD_THEN_BOUNDED_SIMULATED_PERMISSION",
+      "executed_test_functions": [
+        "test_varied_readings_user_chosen_outcome_and_timing"
+      ],
+      "result": "PASSED_DECLARED_SOFTWARE_BOUNDARY"
+    },
+    {
+      "id": "R15",
+      "input": "Explicitly covered C03 alternative",
+      "expected": "ACCEPT_WITH_SEPARATE_SCOPED_QA_PERMISSION",
+      "executed_test_functions": [
+        "test_frozen_independent_cases"
+      ],
+      "result": "PASSED_DECLARED_SOFTWARE_BOUNDARY"
+    }
+  ],
+  "limits": "Development regressions and developer browser operation, not blind external certification, physical trials or proof of industrial value",
+  "browser_checks": 13
+}

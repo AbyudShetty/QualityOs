@@ -161,10 +161,11 @@ def recover(client, w):
     command(client, w, "refresh_source", {"run_id": rid})
     command(client, w, "functional", {"study_id": study2, "outcome": "PASS"})
     s = snap(client, w)
-    assert s["decision"]["recommendation"] == "ACCEPT"
+    assert s["decision"]["recommendation"] == "HOLD"  # required QA assessment is still pending
     assert any(h["status"] == "ACTIVE" for h in find(s, "hold"))
     command(client, w, "assess_action", {"action_id": action["id"]})
     s = snap(client, w)
+    assert s['decision']['recommendation']=='ACCEPT'
     command(
         client,
         w,
@@ -547,8 +548,8 @@ def test_old_qualification_cannot_complete_sparse_action_verification(system):
     command(c, w, "refresh_source", {"run_id": rid})
     command(c, w, "functional", {"study_id": study, "outcome": "PASS"})
     assert (
-        snap(c, w)["decision"]["recommendation"] == "ACCEPT"
-    )  # old unchanged-scope proof remains valid
+        snap(c, w)["decision"]["recommendation"] == "HOLD"
+    )  # old proof cannot discharge a separately required fresh verification
     response = command(c, w, "assess_action", {"action_id": action}, status=409)
     assert response.json()["code"] == "NEW_VERIFICATION_REQUIRED"
     assert find(snap(c, w), "action")[-1]["status"] == "VERIFYING"

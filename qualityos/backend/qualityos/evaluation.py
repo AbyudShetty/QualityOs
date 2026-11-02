@@ -169,7 +169,7 @@ def run_evaluation(store=None):
         "policies": [
             {"name": "QualityOS", "matches": sum(x["actual"] == x["expected"] for x in results)},
             {
-                "name": "Competent SOP / evidence-aware reference",
+                "name": "Separately specified synthetic checklist (limited coverage)",
                 "matches": sum(x["reference"] == x["expected"] for x in results),
             },
             {
@@ -188,7 +188,7 @@ def run_evaluation(store=None):
         },
         "limits": [
             "Declared software cases, not independent manufacturing trials",
-            "Parity with competent evidence-aware practice is expected and retained",
+            "Checklist parity covers only these declared cases; the reference omits some production invariants and is not a validated industrial SOP",
             "No commercial MES installation was benchmarked",
             "No physical defects prevented, factory savings or human-time benefit measured",
         ],

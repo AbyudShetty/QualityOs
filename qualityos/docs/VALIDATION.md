@@ -1,4 +1,12 @@
-# Current validation: user-controlled experiments
+# Current validation: independent-review remediation, 2 November 2026
+
+The current executed results are in [review-remediation/summary.json](validation/review-remediation/summary.json), with raw backend/frontend outputs, developer-operated real-browser checks, contrast screen, preserved-source comparison and retained v1/new v2 case records. Read the [engineering handoff](REVIEW_HANDOFF_2026-11-02.md) for corrected policy/role/study/recovery/containment semantics and deliberate changed test expectations. The primary task is now the packaging-change panel, with the older tabs retained for inspection.
+
+The October reports below are historical. Passing software tests or a completed synthetic browser recovery does not establish physical efficacy, first-pass yield, savings, industrial novelty or independent first-time-user comprehension. Root manual/PDF files remain unchanged and depict the preceding interface.
+
+---
+
+# Earlier validation: user-controlled experiments
 
 31 October 2026. The previous guided-story UI passed automated checks but failed the user's first-visit comprehension review. It was replaced as the default experience. The retained older reports below do not establish acceptance of the current UI.
 

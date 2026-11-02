@@ -1,0 +1,1309 @@
+{
+  "created_at": "2026-10-31T15:19:25.136Z",
+  "provenance": "SYNTHETIC",
+  "database_basis": "Isolated var/ui-checks store, not user application state",
+  "markdown_manual_sha256": "4421cad919adb3d63c8d481a7c12832b7ab38556f514c96b2cdcad2b9cffd082",
+  "markdown_unchanged": true,
+  "shots": {
+    "01-login": {
+      "file": "screenshots/01-login.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 827,
+        "y": 217.515625,
+        "w": 386,
+        "h": 564.96875
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Account",
+          "x": 845,
+          "y": 456.484375,
+          "w": 350,
+          "h": 44
+        },
+        {
+          "n": 2,
+          "label": "Private password",
+          "x": 845,
+          "y": 544.484375,
+          "w": 350,
+          "h": 44
+        },
+        {
+          "n": 3,
+          "label": "Sign in",
+          "x": 845,
+          "y": 613.484375,
+          "w": 350,
+          "h": 43
+        }
+      ]
+    },
+    "02-introduction": {
+      "file": "screenshots/02-introduction.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "w": 1360,
+        "h": 1000
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Purpose",
+          "x": 276,
+          "y": 152,
+          "w": 531.125,
+          "h": 96
+        },
+        {
+          "n": 2,
+          "label": "Factory context",
+          "x": 849.125,
+          "y": 136.21875,
+          "w": 461.859375,
+          "h": 384
+        },
+        {
+          "n": 3,
+          "label": "Simulation boundary",
+          "x": 276,
+          "y": 564.4375,
+          "w": 1035,
+          "h": 83.5
+        }
+      ]
+    },
+    "03-starting-points": {
+      "file": "screenshots/03-starting-points.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 258,
+        "y": 267.9375,
+        "w": 1071,
+        "h": 382
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Ready-made example",
+          "x": 299,
+          "y": 540.9375,
+          "w": 289,
+          "h": 38
+        },
+        {
+          "n": 2,
+          "label": "Missing coverage",
+          "x": 649,
+          "y": 540.9375,
+          "w": 289,
+          "h": 38
+        },
+        {
+          "n": 3,
+          "label": "Your own inputs",
+          "x": 999,
+          "y": 540.9375,
+          "w": 289,
+          "h": 38
+        }
+      ]
+    },
+    "04-navigation": {
+      "file": "screenshots/04-navigation.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "w": 1360,
+        "h": 1000
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Four tabs",
+          "x": 16,
+          "y": 252,
+          "w": 210,
+          "h": 314
+        },
+        {
+          "n": 2,
+          "label": "Saved session",
+          "x": 16,
+          "y": 632,
+          "w": 210,
+          "h": 38
+        },
+        {
+          "n": 3,
+          "label": "Selected run",
+          "x": 276,
+          "y": 207.984375,
+          "w": 1035,
+          "h": 94
+        }
+      ]
+    },
+    "05-permission-note": {
+      "file": "screenshots/05-permission-note.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 100.875,
+        "w": 606,
+        "h": 798.25
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Review explanation",
+          "x": 404.5,
+          "y": 681.734375,
+          "w": 536,
+          "h": 84.390625
+        },
+        {
+          "n": 2,
+          "label": "Editable example",
+          "x": 404.5,
+          "y": 773.125,
+          "w": 536,
+          "h": 24
+        },
+        {
+          "n": 3,
+          "label": "Record approval",
+          "x": 730.9375,
+          "y": 835.125,
+          "w": 209.5625,
+          "h": 38
+        }
+      ]
+    },
+    "06-first-success": {
+      "file": "screenshots/06-first-success.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 255,
+        "y": 359.078125,
+        "w": 1090,
+        "h": 630
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Five saved units",
+          "x": 300,
+          "y": 474.078125,
+          "w": 460,
+          "h": 52
+        },
+        {
+          "n": 2,
+          "label": "Bounded permission",
+          "x": 300,
+          "y": 555.078125,
+          "w": 460,
+          "h": 12
+        },
+        {
+          "n": 3,
+          "label": "Explicit next action",
+          "x": 979.5,
+          "y": 278.6875,
+          "w": 306.5,
+          "h": 42
+        }
+      ]
+    },
+    "07-create-experiment": {
+      "file": "screenshots/07-create-experiment.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 42,
+        "w": 606,
+        "h": 916
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Name the session",
+          "x": 404.5,
+          "y": 287.671875,
+          "w": 521,
+          "h": 39
+        },
+        {
+          "n": 2,
+          "label": "Untested C02 caps",
+          "x": 404.5,
+          "y": 526.015625,
+          "w": 521,
+          "h": 40
+        },
+        {
+          "n": 3,
+          "label": "Original v1 setup",
+          "x": 404.5,
+          "y": 652.703125,
+          "w": 521,
+          "h": 40
+        }
+      ]
+    },
+    "08-paused-setup": {
+      "file": "screenshots/08-paused-setup.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 253,
+        "y": 70,
+        "w": 1090,
+        "h": 900
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Current decision",
+          "x": 954.5,
+          "y": 210.890625,
+          "w": 356.5,
+          "h": 577.796875
+        },
+        {
+          "n": 2,
+          "label": "Change deliberately",
+          "x": 810.84375,
+          "y": 588.6875,
+          "w": 100.65625,
+          "h": 21
+        }
+      ]
+    },
+    "09-start-test-set": {
+      "file": "screenshots/09-start-test-set.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 258,
+        "y": 260.078125,
+        "w": 1071,
+        "h": 479.171875
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Start the empty set",
+          "x": 1180.421875,
+          "y": 413.65625,
+          "w": 107.578125,
+          "h": 33
+        },
+        {
+          "n": 2,
+          "label": "Why data entry is unavailable",
+          "x": 299,
+          "y": 654.65625,
+          "w": 989,
+          "h": 43.59375
+        }
+      ]
+    },
+    "10-enter-readings": {
+      "file": "screenshots/10-enter-readings.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 42,
+        "w": 606,
+        "h": 916
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Current test set",
+          "x": 404.5,
+          "y": 309.109375,
+          "w": 521,
+          "h": 40
+        },
+        {
+          "n": 2,
+          "label": "Three specimens",
+          "x": 404.5,
+          "y": 415.453125,
+          "w": 521,
+          "h": 63.59375
+        },
+        {
+          "n": 3,
+          "label": "Eligible reference",
+          "x": 404.5,
+          "y": 607.734375,
+          "w": 521,
+          "h": 40
+        }
+      ]
+    },
+    "11-advance-time": {
+      "file": "screenshots/11-advance-time.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 211.8125,
+        "w": 606,
+        "h": 576.359375
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "24 fictional hours",
+          "x": 404.5,
+          "y": 457.484375,
+          "w": 536,
+          "h": 39
+        },
+        {
+          "n": 2,
+          "label": "Submit the time advance",
+          "x": 746.828125,
+          "y": 724.171875,
+          "w": 193.671875,
+          "h": 38
+        }
+      ]
+    },
+    "12-confirm-records": {
+      "file": "screenshots/12-confirm-records.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 263.9375,
+        "w": 606,
+        "h": 472.109375
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "What this confirmation means",
+          "x": 404.5,
+          "y": 390.734375,
+          "w": 536,
+          "h": 96.3125
+        },
+        {
+          "n": 2,
+          "label": "Confirm the feed",
+          "x": 747.515625,
+          "y": 672.046875,
+          "w": 192.984375,
+          "h": 38
+        }
+      ]
+    },
+    "13-independent-result": {
+      "file": "screenshots/13-independent-result.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 147.640625,
+        "w": 606,
+        "h": 704.703125
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "The same specimens",
+          "x": 404.5,
+          "y": 393.3125,
+          "w": 536,
+          "h": 40
+        },
+        {
+          "n": 2,
+          "label": "Choose FAIL for this route",
+          "x": 404.5,
+          "y": 499.65625,
+          "w": 536,
+          "h": 40
+        },
+        {
+          "n": 3,
+          "label": "Save your supplied outcome",
+          "x": 745.234375,
+          "y": 788.34375,
+          "w": 195.265625,
+          "h": 38
+        }
+      ]
+    },
+    "14-failed-check": {
+      "file": "screenshots/14-failed-check.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 258,
+        "y": 0,
+        "w": 628.65625,
+        "h": 970.03125
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Independent leak requirement failed",
+          "x": 300,
+          "y": 427.234375,
+          "w": 544.65625,
+          "h": 144.796875
+        },
+        {
+          "n": 2,
+          "label": "Torque can still meet its own requirement",
+          "x": 300,
+          "y": 306.4375,
+          "w": 544.65625,
+          "h": 120.796875
+        }
+      ]
+    },
+    "15-describe-problem": {
+      "file": "screenshots/15-describe-problem.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 175.453125,
+        "w": 606,
+        "h": 649.09375
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Recognizable title",
+          "x": 404.5,
+          "y": 421.125,
+          "w": 536,
+          "h": 39
+        },
+        {
+          "n": 2,
+          "label": "Observation before cause",
+          "x": 404.5,
+          "y": 526.46875,
+          "w": 536,
+          "h": 84.390625
+        }
+      ]
+    },
+    "16-possible-explanation": {
+      "file": "screenshots/16-possible-explanation.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 42,
+        "w": 606,
+        "h": 916
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "A possibility, not a conclusion",
+          "x": 404.5,
+          "y": 394.015625,
+          "w": 521,
+          "h": 39
+        },
+        {
+          "n": 2,
+          "label": "How to test the explanation",
+          "x": 404.5,
+          "y": 499.359375,
+          "w": 521,
+          "h": 84.390625
+        }
+      ]
+    },
+    "17-plan-change": {
+      "file": "screenshots/17-plan-change.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 51.90625,
+        "w": 606,
+        "h": 896.171875
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Alternate setup v2",
+          "x": 404.5,
+          "y": 403.921875,
+          "w": 536,
+          "h": 40
+        },
+        {
+          "n": 2,
+          "label": "Fresh evidence plan",
+          "x": 404.5,
+          "y": 510.265625,
+          "w": 536,
+          "h": 84.390625
+        }
+      ]
+    },
+    "18-review-note": {
+      "file": "screenshots/18-review-note.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 51.90625,
+        "w": 606,
+        "h": 896.171875
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Why try this change?",
+          "x": 404.5,
+          "y": 730.6875,
+          "w": 536,
+          "h": 84.390625
+        },
+        {
+          "n": 2,
+          "label": "Read and adapt the example",
+          "x": 404.5,
+          "y": 822.078125,
+          "w": 536,
+          "h": 24
+        },
+        {
+          "n": 3,
+          "label": "Save the plan",
+          "x": 754.234375,
+          "y": 884.078125,
+          "w": 186.265625,
+          "h": 38
+        }
+      ]
+    },
+    "19-approve-plan": {
+      "file": "screenshots/19-approve-plan.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 282,
+        "y": 355.453125,
+        "w": 1023,
+        "h": 265.59375
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Review before execution",
+          "x": 319,
+          "y": 551.046875,
+          "w": 168.15625,
+          "h": 33
+        }
+      ]
+    },
+    "20-apply-setup": {
+      "file": "screenshots/20-apply-setup.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 282,
+        "y": 355.453125,
+        "w": 1023,
+        "h": 265.59375
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Record the approved change",
+          "x": 319,
+          "y": 551.046875,
+          "w": 172.421875,
+          "h": 33
+        }
+      ]
+    },
+    "21-start-verification": {
+      "file": "screenshots/21-start-verification.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 282,
+        "y": 355.453125,
+        "w": 1023,
+        "h": 265.59375
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Fresh post-change tests",
+          "x": 319,
+          "y": 551.046875,
+          "w": 178.109375,
+          "h": 33
+        }
+      ]
+    },
+    "22-fresh-readings": {
+      "file": "screenshots/22-fresh-readings.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 42,
+        "w": 606,
+        "h": 916
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "New v2 test set",
+          "x": 404.5,
+          "y": 309.109375,
+          "w": 521,
+          "h": 40
+        },
+        {
+          "n": 2,
+          "label": "Fresh values, not borrowed proof",
+          "x": 404.5,
+          "y": 415.453125,
+          "w": 521,
+          "h": 63.59375
+        }
+      ]
+    },
+    "23-fresh-pass": {
+      "file": "screenshots/23-fresh-pass.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 147.640625,
+        "w": 606,
+        "h": 704.703125
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Fresh verification set",
+          "x": 404.5,
+          "y": 393.3125,
+          "w": 536,
+          "h": 40
+        },
+        {
+          "n": 2,
+          "label": "Supplied PASS for this route",
+          "x": 404.5,
+          "y": 499.65625,
+          "w": 536,
+          "h": 40
+        }
+      ]
+    },
+    "24-review-verification": {
+      "file": "screenshots/24-review-verification.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 282,
+        "y": 355.453125,
+        "w": 1023,
+        "h": 265.59375
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Assess fresh evidence",
+          "x": 503.640625,
+          "y": 551.046875,
+          "w": 182.421875,
+          "h": 33
+        },
+        {
+          "n": 2,
+          "label": "Change status",
+          "x": 1187.671875,
+          "y": 392.453125,
+          "w": 80.328125,
+          "h": 26.796875
+        }
+      ]
+    },
+    "25-resolve-pause": {
+      "file": "screenshots/25-resolve-pause.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 174.8125,
+        "w": 606,
+        "h": 650.375
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "What resolves the gap?",
+          "x": 404.5,
+          "y": 607.796875,
+          "w": 536,
+          "h": 84.390625
+        },
+        {
+          "n": 2,
+          "label": "Resolve; permission comes next",
+          "x": 778.515625,
+          "y": 761.1875,
+          "w": 161.984375,
+          "h": 38
+        }
+      ]
+    },
+    "26-bounded-permission": {
+      "file": "screenshots/26-bounded-permission.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 100.875,
+        "w": 606,
+        "h": 798.25
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "At most 10 units",
+          "x": 404.5,
+          "y": 486.359375,
+          "w": 260,
+          "h": 39
+        },
+        {
+          "n": 2,
+          "label": "For 30 demonstration minutes",
+          "x": 680.5,
+          "y": 486.359375,
+          "w": 260,
+          "h": 39
+        }
+      ]
+    },
+    "27-record-units": {
+      "file": "screenshots/27-record-units.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 211.265625,
+        "w": 606,
+        "h": 577.453125
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Choose the count",
+          "x": 404.5,
+          "y": 478.375,
+          "w": 536,
+          "h": 39
+        },
+        {
+          "n": 2,
+          "label": "Server rechecks before saving",
+          "x": 769.59375,
+          "y": 724.71875,
+          "w": 170.90625,
+          "h": 38
+        }
+      ]
+    },
+    "28-recovered-production": {
+      "file": "screenshots/28-recovered-production.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 255,
+        "y": 359.078125,
+        "w": 1090,
+        "h": 630
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Five actual saved sample records",
+          "x": 300,
+          "y": 474.078125,
+          "w": 460,
+          "h": 52
+        },
+        {
+          "n": 2,
+          "label": "Five left on this permission",
+          "x": 300,
+          "y": 555.078125,
+          "w": 460,
+          "h": 12
+        }
+      ]
+    },
+    "29-decision-history": {
+      "file": "screenshots/29-decision-history.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 253,
+        "y": 70,
+        "w": 1090,
+        "h": 900
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Saved choices and consequences",
+          "x": 300,
+          "y": 629.296875,
+          "w": 987,
+          "h": 100.1875
+        },
+        {
+          "n": 2,
+          "label": "Earlier knowledge cuts",
+          "x": 1083,
+          "y": 480.703125,
+          "w": 228,
+          "h": 39
+        }
+      ]
+    },
+    "30-historical-view": {
+      "file": "screenshots/30-historical-view.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 253,
+        "y": 70,
+        "w": 1090,
+        "h": 900
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Read-only earlier knowledge",
+          "x": 276,
+          "y": 207.984375,
+          "w": 1035,
+          "h": 52
+        },
+        {
+          "n": 2,
+          "label": "Return before editing",
+          "x": 1196.125,
+          "y": 221.984375,
+          "w": 97.875,
+          "h": 24
+        }
+      ]
+    },
+    "31-advanced-controls": {
+      "file": "screenshots/31-advanced-controls.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 258,
+        "y": 722.640625,
+        "w": 1071,
+        "h": 163.09375
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Reference withdrawal",
+          "x": 295,
+          "y": 813.734375,
+          "w": 182.484375,
+          "h": 38
+        },
+        {
+          "n": 2,
+          "label": "Versioned correction",
+          "x": 491.484375,
+          "y": 813.734375,
+          "w": 183.84375,
+          "h": 38
+        }
+      ]
+    },
+    "32-custom-inputs": {
+      "file": "screenshots/32-custom-inputs.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 42,
+        "w": 606,
+        "h": 916
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "New fictional material identity",
+          "x": 404.5,
+          "y": 436.703125,
+          "w": 521,
+          "h": 39
+        },
+        {
+          "n": 2,
+          "label": "Name the setup",
+          "x": 404.5,
+          "y": 593.703125,
+          "w": 252.5,
+          "h": 39
+        },
+        {
+          "n": 3,
+          "label": "Save a chosen setting",
+          "x": 673,
+          "y": 593.703125,
+          "w": 252.5,
+          "h": 39
+        }
+      ]
+    },
+    "33-expired-reference": {
+      "file": "screenshots/33-expired-reference.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 42,
+        "w": 606,
+        "h": 916
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "In-range numbers",
+          "x": 404.5,
+          "y": 415.453125,
+          "w": 521,
+          "h": 63.59375
+        },
+        {
+          "n": 2,
+          "label": "Expired reference",
+          "x": 404.5,
+          "y": 607.734375,
+          "w": 521,
+          "h": 40
+        }
+      ]
+    },
+    "34-unusable-measurement": {
+      "file": "screenshots/34-unusable-measurement.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 893.65625,
+        "y": 354.25,
+        "w": 411.328125,
+        "h": 291.875
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Reliability and range are separate",
+          "x": 911.65625,
+          "y": 372.25,
+          "w": 375.328125,
+          "h": 255.875
+        }
+      ]
+    },
+    "35-saved-experiments": {
+      "file": "screenshots/35-saved-experiments.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "w": 1360,
+        "h": 1000
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Reopen saved work",
+          "x": 16,
+          "y": 632,
+          "w": 210,
+          "h": 38
+        }
+      ]
+    },
+    "36-saved-list": {
+      "file": "screenshots/36-saved-list.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 258,
+        "y": 578.28125,
+        "w": 1071,
+        "h": 399.59375
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Independent practice sessions",
+          "x": 301,
+          "y": 688.875,
+          "w": 985,
+          "h": 201
+        },
+        {
+          "n": 2,
+          "label": "Preserved earlier sessions",
+          "x": 301,
+          "y": 910.875,
+          "w": 346.25,
+          "h": 24
+        }
+      ]
+    },
+    "37-evaluation": {
+      "file": "screenshots/37-evaluation.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 253,
+        "y": 70,
+        "w": 1090,
+        "h": 900
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Run the declared software cases",
+          "x": 1069.359375,
+          "y": 366.890625,
+          "w": 217.640625,
+          "h": 38
+        },
+        {
+          "n": 2,
+          "label": "Actual declared-case comparison",
+          "x": 300,
+          "y": 434.484375,
+          "w": 987,
+          "h": 130.796875
+        }
+      ]
+    },
+    "38-record-details": {
+      "file": "screenshots/38-record-details.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 857,
+        "y": 0,
+        "w": 503,
+        "h": 1000
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Inspect the original record",
+          "x": 875,
+          "y": 0,
+          "w": 470,
+          "h": 1000
+        }
+      ]
+    },
+    "40-export": {
+      "file": "screenshots/40-export.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 258,
+        "y": 74,
+        "w": 1071,
+        "h": 125.984375
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Download the saved records",
+          "x": 995.8125,
+          "y": 117.984375,
+          "w": 158.984375,
+          "h": 38
+        }
+      ]
+    },
+    "41-covered-caps": {
+      "file": "screenshots/41-covered-caps.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 253,
+        "y": 70,
+        "w": 1090,
+        "h": 900
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Different caps can still be covered",
+          "x": 954.5,
+          "y": 210.890625,
+          "w": 356.5,
+          "h": 577.796875
+        }
+      ]
+    },
+    "42-reference-withdrawal": {
+      "file": "screenshots/42-reference-withdrawal.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 42,
+        "w": 606,
+        "h": 916
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Reference being withdrawn",
+          "x": 404.5,
+          "y": 309.109375,
+          "w": 521,
+          "h": 40
+        },
+        {
+          "n": 2,
+          "label": "Affected measurement period",
+          "x": 404.5,
+          "y": 435.796875,
+          "w": 521,
+          "h": 39
+        },
+        {
+          "n": 3,
+          "label": "End of affected period",
+          "x": 404.5,
+          "y": 561.484375,
+          "w": 521,
+          "h": 39
+        }
+      ]
+    },
+    "43-potential-impact": {
+      "file": "screenshots/43-potential-impact.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 258,
+        "y": 397.890625,
+        "w": 1071,
+        "h": 204.78125
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Five potentially affected samples",
+          "x": 302,
+          "y": 460.890625,
+          "w": 600,
+          "h": 53.1875
+        },
+        {
+          "n": 2,
+          "label": "Separate handling review",
+          "x": 1099.59375,
+          "y": 481.28125,
+          "w": 185.40625,
+          "h": 38
+        }
+      ]
+    },
+    "44-handling-decision": {
+      "file": "screenshots/44-handling-decision.png",
+      "width": 1360,
+      "height": 1000,
+      "crop": {
+        "x": 369.5,
+        "y": 136.546875,
+        "w": 606,
+        "h": 726.890625
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Choose how to handle the samples",
+          "x": 404.5,
+          "y": 413.015625,
+          "w": 536,
+          "h": 40
+        }
+      ]
+    },
+    "39-mobile-navigation": {
+      "file": "screenshots/39-mobile-navigation.png",
+      "width": 390,
+      "height": 1000,
+      "crop": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 1000
+      },
+      "targets": [
+        {
+          "n": 1,
+          "label": "Same four tabs on mobile",
+          "x": 12,
+          "y": 252,
+          "w": 218,
+          "h": 282
+        },
+        {
+          "n": 2,
+          "label": "Same saved experiments",
+          "x": 12,
+          "y": 600,
+          "w": 218,
+          "h": 38
+        }
+      ]
+    }
+  }
+}

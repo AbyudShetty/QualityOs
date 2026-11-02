@@ -1,0 +1,31 @@
+{
+  "created_at": "2026-11-02T16:43:37.421Z",
+  "basis": "Computed solid foreground/background colors; excludes disabled and aria-hidden controls; not a complete accessibility certification",
+  "reports": [
+    {
+      "page": "start",
+      "checked": 103,
+      "failures": []
+    },
+    {
+      "page": "line",
+      "checked": 222,
+      "failures": []
+    },
+    {
+      "page": "evidence",
+      "checked": 332,
+      "failures": []
+    },
+    {
+      "page": "qualification",
+      "checked": 154,
+      "failures": []
+    },
+    {
+      "page": "investigation",
+      "checked": 91,
+      "failures": []
+    }
+  ]
+}

@@ -1,63 +1,120 @@
-# QualityOS
+# QualityOS · application guide
 
-A local, persisted quality evidence and decision prototype. A packaging change makes old qualification inapplicable; the affected run holds until fresh, reliable, independent verification and explicit QA authorization permit bounded simulated continuation.
+QualityOS checks whether packaging qualification evidence still applies after a bottle, cap, supplier or machine-setup change. The local application connects scope comparison, fresh testing, investigation, QA review and guarded simulated continuation in one persisted workflow.
 
-Four tabs use one backend: Production setup, Tests & approval, Investigate a problem, and Decision history. You choose fictional materials, machine setup, readings and independent leak outcomes. The product checks whether those records support a limited continuation; it does not predict a physical seal.
+For the product overview and screenshots, see the [repository README](../README.md). For the recommended first run, follow the [current packaging-change demonstration](docs/DEMO_2026-11-02.md).
 
-(imp) All supplied observations, suppliers, products and produced units are synthetic. This application does not control equipment, establish package safety, authorize commercial release or demonstrate factory savings.
+## Start in the configured workspace
 
-## Open the local product
-
-Open [Getting started](http://127.0.0.1:8107/start). The introduction explains a bottled-lotion factory before asking you to choose anything. Choose an approved example, untested caps, or custom fictional inputs. Each experiment is a saved practice session. Each tab explains its steps; test outcomes are your explicit choices, with no prescribed story.
-
-After updating the product, stop the existing server with Ctrl+C in its terminal and start it again. A page refresh alone does not reload Python backend changes or apply the session-category migration. Earlier sessions remain accessible under Getting started; development checks stay out of the normal selector.
-
-Otherwise run:
+From the repository root:
 
 ```powershell
-Set-Location 'C:/ABYUD/HACKATHONS/LOREAL/qualityos'
-.\start.ps1
+npm start
 ```
 
-Keep that terminal running. Stop its server with Ctrl+C. Start again with the same command to retain experiments, audit, accounts and history. Do not delete a database to reset a demonstration; use Create experiment.
+Open **[http://127.0.0.1:8107/start](http://127.0.0.1:8107/start)**, sign in and choose **Inspect a packaging change**. Start with the original tested configuration, then explicitly change the cap/supplier to see the evidence gap and next required action.
 
-On first launch the backend generates random private credentials in `var/local-credentials.json`. Open that file privately on this device and sign in as `qa` for the complete workflow. `operator`, `viewer` and `admin` demonstrate different permissions. ADMIN cannot sign QA authorizations. Passwords are not printed by setup or returned through the API. The display names are fictional demo actors.
+The launcher builds the React frontend and starts the Python backend serving both the UI and API. Keep the terminal open. Stop with **Ctrl+C**; restart with the same command to retain saved work. A browser refresh does not load changed Python code, so stop an older server before launching an updated version.
 
-## Setup on a fresh environment
+At the repository root, `npm run dev` aliases this complete launch and does not enable hot reload. No root-level dependency installation is required in the already configured workspace.
 
-Tested here: Python 3.10.0, Node 25.2.0, npm 11.19.0, FastAPI 0.111.0, SQLAlchemy 2.0.43, React 19.3.1, TypeScript 7.0.2 and Vite 8.3.4. Exact Python runtime/verification dependencies and npm dependencies are locked.
+## Local sign-in
+
+On first backend launch, setup creates random private passwords in `qualityos/var/local-credentials.json`. Read that file privately on your device; do not publish or commit it.
+
+| Account | Purpose |
+|---|---|
+| `qa` | Complete the demonstration, including quality review, hold resolution and bounded permission |
+| `operator` | Record observations, propose changes and execute approved work; cannot sign QA permissions |
+| `viewer` | Inspect saved experiments and history without changing them |
+| `admin` | Local administrative functions; does not automatically receive QA signing authority |
+
+The display names are fictional demonstration actors. Passwords are not included in the documentation or returned through the API.
+
+## Install dependencies on a fresh environment
+
+The tested development environment uses **Python 3.10.0**, **Node 25.2.0** and **npm 11.19.0**. These are observed versions, not a claim of compatibility with every Python/Node release. Python dependencies are pinned in `requirements.lock.txt`; frontend dependencies are pinned in `web/package-lock.json`.
+
+From the repository root in PowerShell:
 
 ```powershell
-Set-Location 'C:/ABYUD/HACKATHONS/LOREAL/qualityos'
+Set-Location qualityos
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.lock.txt
 Set-Location web
 npm ci
-npm run build
-Set-Location ..
+Set-Location ../..
+npm start
+```
+
+Clean online installation has not been verified in this restricted environment. The working local Python environment exposes existing system packages through `--system-site-packages`; frontend packages were restored locally and version-checked. No global packages were changed. See **ADR-008** in the [decision log](docs/DECISIONS.md) for the tested fallback and its isolation limits. Do not recreate the working environment simply to view the application.
+
+## Develop locally
+
+Use two terminals from the product directory, `qualityos`.
+
+**Backend**, after a frontend build exists:
+
+```powershell
 .\start.ps1
 ```
 
-Fresh online installation was not verified in this restricted execution environment: external package downloads were blocked. The working local build uses a product-local Python environment with read access to installed system packages, plus locally restored, version-verified npm dependencies. No global packages were changed and no other project's application code is a runtime dependency. See ADR-008 in [DECISIONS.md](docs/DECISIONS.md) for the exact fallback and its isolation limitation. Do not recreate the working environment merely to view the demo.
+**Frontend with Vite development updates**, in the other terminal:
 
-The built frontend and API share port 8107. For frontend development, run `npm run dev` from `web` in a separate terminal; Vite uses 5177 and proxies `/api` to 8107. Local fonts are bundled; no CDN or external account is needed.
+```powershell
+Set-Location web
+npm run dev
+```
 
-## Verify and demonstrate
+Vite serves `http://127.0.0.1:5177` and proxies `/api` to the backend on port `8107`. The built application uses port `8107` for both frontend and API. Fonts are bundled locally; opening the demo needs no external account or CDN.
+
+To build only the frontend from the repository root:
+
+```powershell
+npm run build
+```
+
+The backend also accepts an alternate local port, for example `.\start.ps1 -Port 8114`, when running from `qualityos`. The Vite proxy remains configured for `8107` unless explicitly changed.
+
+## Verify the implementation
+
+From `qualityos`:
 
 ```powershell
 .\verify.ps1
+```
+
+This runs backend tests, frontend tests, TypeScript/build and isolated contract generation, and updates local validation outputs. The latest [recorded verification](docs/validation/review-remediation/summary.json) reports **94 backend tests**, **8 frontend tests** and **13 real-browser checks**. The browser checks run separately against an isolated test database; the [engineering handoff](docs/REVIEW_HANDOFF_2026-11-02.md) explains their scope and reproduction.
+
+To execute and persist the declared synthetic comparison in the current application store:
+
+```powershell
 .\start.ps1 -Mode evaluate
 ```
 
-The first command runs backend checks, frontend tests, TypeScript/build and isolated contract generation. The second persists the independent synthetic comparison in the current store. Open Production setup → Independent evaluation to inspect the comparison through the UI.
+Inspect its results under **Production setup → Independent evaluation**. The comparator is a limited separately specified synthetic checklist, not a tested commercial system or validated industrial SOP. API documentation is available at `http://127.0.0.1:8107/docs` while the backend is running.
 
-- [Walkthrough: change, hold, investigate, verify, authorize](docs/WALKTHROUGH.md).
-- [Current first-visit experience, user choices and executed checks](docs/UX_EXPERIMENTS.md).
-- [Executed validation, invariant mapping and limitations](docs/VALIDATION.md).
-- [Architecture, API contracts, migrations and recovery](docs/OPERATIONS.md).
-- [Implementation milestones](docs/PLAN.md) and [decision record](docs/DECISIONS.md).
-- [User-run Git commands](docs/GIT_SETUP.md).
+## State and history
 
-Source code is under `backend/qualityos` and `web/src`. Small reviewed results are under `docs/validation`; private databases, credentials, raw browser screenshots, test stores and browser profiles remain in ignored `var`. Handoff and research remain outside the product. The original PDF is currently missing locally; the published case was reread and the gap is documented in [SOURCE_STATUS.md](docs/SOURCE_STATUS.md). The original expected hashes remain in [SOURCE_MANIFEST.json](docs/SOURCE_MANIFEST.json).
+SQLite stores experiments, evidence, decisions, audit records and simulated units under ignored `var`. Restarting preserves these records. To try another condition, create a new experiment instead of deleting a database.
 
-Optional TareTruth, physical/bench adapters, industrial connectors, cloud deployment, final competition slide and resume changes are outside this completed core. Competition eligibility, current submission rules and manufacturer adoption remain unverified by this software work.
+Historical decisions remain read-only. Later corrections and reference withdrawals change current implications while retaining the original records. Export experiment provides the complete workspace record; the on-screen history/link views are explicitly bounded. See [operations](docs/OPERATIONS.md) before backup, migration or recovery work.
+
+## Current documentation
+
+| Document | Use |
+|---|---|
+| [Current demonstration](docs/DEMO_2026-11-02.md) | Recommended entry, exact inputs, expected decisions and failure/recovery route |
+| [Engineering handoff](docs/REVIEW_HANDOFF_2026-11-02.md) | Current behavior, review corrections and remaining limits |
+| [Architecture and operations](docs/OPERATIONS.md) | API, transactions, persistence, roles and recovery |
+| [Validation](docs/VALIDATION.md) | Executed results and historical validation records |
+| [Decisions](docs/DECISIONS.md) | Architectural choices and documented trade-offs |
+| [Repository setup](docs/GIT_SETUP.md) | Repository boundary and user-run Git instructions |
+
+The root user manual and visual PDF are retained historical guides; their screenshots predate the focused packaging-change panel. Use the current demonstration above for the implemented interface.
+
+## Demonstration boundary
+
+All products, suppliers, observations and units are synthetic. Test outcomes are supplied inputs; torque does not predict the leak result. Sample counts, limits, dwell and error bounds are illustrative assumptions. Software verification establishes behavior within that declared scope, not physical package safety, factory savings, industrial adoption or commercial release authority.
+
+The current scope is one packaging-change workflow. Additional manufacturing modules, physical adapters, industrial connectors and public deployment are deferred.

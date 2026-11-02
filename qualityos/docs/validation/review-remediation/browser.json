@@ -1,0 +1,28 @@
+{
+  "provenance": "SYNTHETIC",
+  "database_basis": "Isolated var/ui-checks database; not user application state",
+  "checks": [
+    "Visible baseline has real applicable earlier proof and no automatic production permission",
+    "Explicit cap/supplier change retains old proof, explains exclusion and pauses only affected future scope",
+    "Changed configuration and scoped hold persist after reload",
+    "Empty required test set stays planned and cannot masquerade as completed qualification",
+    "Fresh independent supplied PASS yields test readiness, with active pause and absent permission explained",
+    "QA pause resolution and bounded permission are separate submissions before five saved units",
+    "Complete fresh post-action tests still block until required QA assessment; no cross-tab coordination required",
+    "Observed failure, required action, fresh verification, QA review and bounded simulated continuation complete through real forms",
+    "Earlier failed decision remains read-only and the recovered result survives reload",
+    "Explicit covered C03 change stays supported, while scoped QA permission remains separate",
+    "Escape dismisses a dialog without changing persisted state",
+    "390 px: current decision and next action above the fold; task navigation fits without overflow",
+    "1440 by 900: old/current configuration, affected scope and next action are visible"
+  ],
+  "errors": [],
+  "experiments": [
+    "workspace-00e997efa283",
+    "workspace-f44d41cdc8d3"
+  ],
+  "completed_at": "2026-11-02T16:42:08.038Z",
+  "base_url": "http://127.0.0.1:8112",
+  "target_id": "8BC96BEC697523F2703DD234E260AF32",
+  "workflow_basis": "Developer-operated real React forms with explicit synthetic choices; not a blind novice study"
+}

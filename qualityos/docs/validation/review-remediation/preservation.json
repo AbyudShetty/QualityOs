@@ -1,0 +1,29 @@
+{
+  "basis": "Comparison with independent-review file baseline; expected source/build changes are listed, not claimed unchanged",
+  "protected_files": 44,
+  "all_protected_matched": true,
+  "changed_original_paths": [
+    "qualityos/backend/qualityos/api.py",
+    "qualityos/backend/qualityos/domain.py",
+    "qualityos/backend/qualityos/evaluation.py",
+    "qualityos/backend/qualityos/journey.py",
+    "qualityos/backend/qualityos/scenarios.py",
+    "qualityos/backend/qualityos/service.py",
+    "qualityos/backend/tests/test_workflow.py",
+    "qualityos/docs/contracts/commands.json",
+    "qualityos/docs/DECISIONS.md",
+    "qualityos/docs/PLAN.md",
+    "qualityos/docs/validation/checks.json",
+    "qualityos/docs/VALIDATION.md",
+    "qualityos/README.md",
+    "qualityos/web/src/api.ts",
+    "qualityos/web/src/App.tsx",
+    "qualityos/web/src/Experience.tsx",
+    "qualityos/web/src/FormGuidance.ts",
+    "qualityos/web/src/main.tsx",
+    "qualityos/web/tsconfig.tsbuildinfo"
+  ],
+  "root_manual_and_pdf_unchanged": true,
+  "frozen_v1_sha256": "27ca75df4960a4d827621280896d17934fe3134c29e9384371ca5c814bb81b2c",
+  "user_runtime_store_used": false
+}

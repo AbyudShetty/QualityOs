@@ -624,7 +624,7 @@ def describe_journey(run, records, decision, now, impact, historical=False):
                 "refresh_source",
                 {**run_payload, "complete": True},
             )
-        if decision["recommendation"] != "ACCEPT":
+        if any(q['verdict']!='SATISFIED' and q['type']!='REQUIRED_ACTION_VERIFICATION' for q in decision['requirements']):
             return interrupted(
                 "The new evidence has not cleared the gate.",
                 "A failure, conflict or missing prerequisite still blocks this condition. A convenient later result cannot silently erase it.",

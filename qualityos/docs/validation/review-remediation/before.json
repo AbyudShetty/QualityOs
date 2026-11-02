@@ -1,0 +1,29 @@
+{
+  "basis": "New frozen expectation tests run against unpatched code; includes missing new contracts, not only demonstrated bugs",
+  "tests": 23,
+  "failures": [
+    "test_governing_policy_never_defaults_to_accept[missing]",
+    "test_governing_policy_never_defaults_to_accept[kind]",
+    "test_governing_policy_never_defaults_to_accept[revision]",
+    "test_governing_policy_never_defaults_to_accept[minimum]",
+    "test_governing_policy_never_defaults_to_accept[boolean_count]",
+    "test_governing_policy_never_defaults_to_accept[limits]",
+    "test_governing_policy_never_defaults_to_accept[dwell]",
+    "test_governing_policy_never_defaults_to_accept[incomplete]",
+    "test_complete_flag_does_not_replace_actual_identity[product_id]",
+    "test_complete_flag_does_not_replace_actual_identity[bottle_lot_id]",
+    "test_complete_flag_does_not_replace_actual_identity[closure_lot_id]",
+    "test_complete_flag_does_not_replace_actual_identity[config_id]",
+    "test_successor_corrections_preserve_chain_and_historical_attestors",
+    "test_operator_cannot_correct_a_failed_result",
+    "test_sparse_required_recovery_cannot_resolve_authorize_or_produce",
+    "test_optional_action_does_not_block_unrelated_valid_production",
+    "test_empty_required_set_is_not_coverage_or_qualification",
+    "test_mandatory_inconclusive_cannot_borrow_old_proof",
+    "test_explicit_supplemental_inconclusive_preserves_independent_proof",
+    "test_three_sparse_studies_cannot_pool_to_qualification",
+    "test_unapproved_cartesian_envelope_cannot_accept",
+    "test_real_failure_needs_qa_study_determination_not_newer_pass",
+    "test_old_scope_impact_has_durable_containment_without_current_blanket_hold"
+  ]
+}

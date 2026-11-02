@@ -4,6 +4,8 @@
 
 One FastAPI process, one SQLite store and one built React application. The default listener is `127.0.0.1:8107`; Vite development uses `127.0.0.1:5177` with the API proxy. `start.ps1` resolves all paths relative to the product, so no historical JOB path is required.
 
+The repository-root `npm start` builds the frontend and invokes the existing product-local PowerShell launcher. `npm run dev` aliases that same complete local launch; it does not start a hot-reloading Vite-only preview. Root package.json has scripts only, with no additional dependencies or separate installation. Stop the previous backend before launching. `npm run build` builds only the frontend. The underlying start.ps1 now accepts an optional validated Port parameter (default 8107) and prints its local URL. For isolated verification, `npm start -- -Port 8114` was run with QUALITYOS_DB pointing to a new ignored launcher-check store; health returned relational schema 2 and /start served the built SPA with HTTP 200. The review process was stopped afterward. This startup check does not exercise manufacturing behavior.
+
 ```mermaid
 flowchart LR
   UI[Line / Evidence / Qualification / Investigation] --> API[Session + typed commands + CSRF]

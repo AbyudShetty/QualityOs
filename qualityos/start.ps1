@@ -1,4 +1,7 @@
-param([ValidateSet('serve','init','evaluate')][string]$Mode='serve')
+param(
+    [ValidateSet('serve','init','evaluate')][string]$Mode='serve',
+    [ValidateRange(1024,65535)][int]$Port=8107
+)
 $ErrorActionPreference='Stop'
 $ProductRoot=$PSScriptRoot
 $PythonPath=Join-Path $ProductRoot '.venv/Scripts/python.exe'
@@ -7,6 +10,7 @@ if ($Mode -eq 'serve' -and -not (Test-Path -LiteralPath (Join-Path $ProductRoot 
 $PreviousPythonPath=$env:PYTHONPATH
 try {
     $env:PYTHONPATH=Join-Path $ProductRoot 'backend'
-    & $PythonPath -m qualityos $Mode
+    if ($Mode -eq 'serve') { Write-Host "Starting QualityOS at http://127.0.0.1:$Port/start. Keep this terminal open; Ctrl+C stops the server." }
+    & $PythonPath -m qualityos $Mode --port $Port
     if ($LASTEXITCODE -ne 0) { throw "QualityOS exited with code $LASTEXITCODE" }
 } finally { $env:PYTHONPATH=$PreviousPythonPath }

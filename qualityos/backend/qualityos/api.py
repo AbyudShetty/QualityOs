@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 from pathlib import Path
 from typing import Literal
@@ -72,6 +73,7 @@ class Context(Run):
 
 class Study(Run):
     action_id: str | None = None
+    purpose: Literal['REQUIRED','SUPPLEMENTAL'] = 'REQUIRED'
 
 
 class Refresh(Run):
@@ -115,6 +117,7 @@ class Measure(Model):
 class Functional(Model):
     study_id: str
     outcome: Literal["PASS", "FAIL", "INCONCLUSIVE"]
+    input_basis: Literal['SYNTHETIC_ALL_SPECIMENS_SAME_OUTCOME'] = 'SYNTHETIC_ALL_SPECIMENS_SAME_OUTCOME'
 
 
 class MeasureBatch(Model):
@@ -149,6 +152,7 @@ class Propose(Model):
     investigation_id: str
     config_id: str
     verification_plan: str = Field(min_length=10, max_length=1000)
+    required_for_release: bool = True
 
 
 class Action(Model):
@@ -177,9 +181,17 @@ class Disposition(Model):
 class Correction(Model):
     evidence_id: str
     outcome: Literal["PASS", "FAIL", "INCONCLUSIVE"]
+    correction_basis: Literal['RECORDING_ERROR'] = 'RECORDING_ERROR'
+
+
+class StudyDisposition(Model):
+    study_id: str
+    verification_study_id: str
+    action_id: str
 
 
 PAYLOADS = {
+    "disposition_study": StudyDisposition,
     "change_context": Context,
     "open_study": Study,
     "refresh_source": Refresh,
@@ -287,6 +299,9 @@ def create_app(db_path=None, credentials_path=None):
                 },
                 503,
             )
+        except Exception:
+            logging.getLogger('qualityos').exception('Unhandled request failure %s',request_id)
+            response=JSONResponse({'code':'INTERNAL_ERROR','message':'The request could not be completed. Review the current state before retrying.','request_id':request_id},500)
         response.headers["X-Request-ID"] = request_id
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "same-origin"
@@ -452,6 +467,7 @@ def create_app(db_path=None, credentials_path=None):
                 "assess_action",
                 "correct_evidence",
                 "disposition",
+                "disposition_study",
             }
             and len(body.reason.strip()) < 5
         ):
